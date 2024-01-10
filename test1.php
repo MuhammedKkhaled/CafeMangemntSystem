@@ -81,8 +81,7 @@ if (isset($_SESSION['username'])) {
 
             <h1 class="h3 mb-0 text-gray-900">طلب الاوردر</h1>
           </div>
-
-          <form id="addOrderForm" method="get">
+          <form id="addOrderForm" method="post" action="Pages/insert_cafe_products.php">
             <div class="form-group">
               <label for="productSelect">اختر المنتج</label>
               <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->

@@ -85,6 +85,9 @@ require_once("inc/navbar.php");
 
     <!-- Content Row -->
 </div>
+
+
+
 <!-- /.container-fluid -->
 <?php
 require_once("inc/footer.php");

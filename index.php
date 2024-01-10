@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           /// If User Is admin so $_SESSION['Is_admin'] -> 1 otherwise = 0
           $_SESSION['is_admin'] = $row['is_admin'];
           $_SESSION['username'] = $row['username'];
+          $_SESSION['user_id'] = $row['id'];
           header("Location: UserDashboard.php");
           exit();
         }

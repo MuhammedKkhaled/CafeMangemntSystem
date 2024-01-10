@@ -18,9 +18,7 @@ if (isset($_SESSION['username'])) {
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-center mb-4">
-            <h1 class="h3 mb-0 text-gray-900">طلب الاوردر</h1>
-        </div>
+
         <!-- Content Row -->
 
         <!-- Begin Cafe Content -->
@@ -73,44 +71,150 @@ if (isset($_SESSION['username'])) {
 
         <!-- Content Row -->
         <!-- chatGpt Content -->
+        <!-- ... Your existing HTML code ... -->
+        <div class="container mt-5">
 
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <form id="addOrderForm">
-                    <div class="form-group">
-                        <label for="productSelect">اختر المنتج</label>
-                        <select class="form-control" id="productSelect" name="product">
-
-                        </select>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="d-sm-flex align-items-center justify-content-center mb-4">
+                        <h1 class="h3 mb-0 text-gray-900">طلب الاوردر</h1>
                     </div>
-                    <div class="form-group">
-                        <label for="quantityInput">الكمية</label>
-                        <input type="number" class="form-control" id="quantityInput" name="quantity" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">إضافة الطلب</button>
-                </form>
+                    <?php
+                    if (isset($_SESSION['error_message'])) {
+                    ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong> ياعم فوق بقا فوق </strong> <span class="alert-message"> <?= $_SESSION['error_message'] ?></span>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php }
+                    unset($_SESSION['error_message']);
+                    ?>
+                    <form id="addOrderForm" method="post" action="Pages/insert_cafe_products.php">
+                        <div class="form-group">
+                            <label for="productSelect"> اختر المنتج الرئيسي</label>
+                            <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
+                            <select class="form-control" id="productSelect" name="product">
+                                <option value="0">برجاء اختيار المنتج</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantityInput">الكمية</label>
+                            <input type="number" class="form-control" id="quantityInput" name="quantity" required min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <div id="additionalProductFieldsContainer"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="addclick">إضافة الطلب</button>
+                    </form>
+                    <!-- Add more products button -->
 
-                <!-- Add more products button -->
-                <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات أخرى</button>
+                    <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات آخرى للطلب </button>
+                    <div class="form-group mt-3">
+
+                        <a href="cafe.php" class="btn btn-danger"> رجوع للخلف</a>
+                    </div>
+
+                    <!-- Container to dynamically add more product fields -->
+                </div>
             </div>
         </div>
-        <!-- End Add Order Form -->
 
-        <!-- Add your JavaScript code here to handle form submission and other interactions -->
+
         <script>
             // Example JavaScript code for handling form submission
-            document.getElementById('addOrderForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+            document.getElementById('addclick').addEventListener('click', function(event) {
+                // event.preventDefault();
                 // Add your logic to handle form submission using AJAX or other methods
-                alert('Order added successfully!');
+                alert('جاري اضافة طلب العميل متنساش تضحك في وشه بقا ');
             });
 
             // Example JavaScript code for handling "Add more products" button click
             document.getElementById('addMoreProductsBtn').addEventListener('click', function() {
                 // Add your logic to handle adding more products, e.g., show/hide additional form fields
-                alert('Add more products logic goes here!');
+                addMoreProductFields();
             });
+
+            // Fetch products and populate the dropdown
+            fetch('pages/get_cafe_porducts.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var productSelect = document.getElementById('productSelect');
+
+                    // Clear existing options (if any)
+                    productSelect.innerHTML = '';
+
+                    // Add a default option
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.text = 'برجاء اختيار المنتج';
+                    productSelect.appendChild(defaultOption);
+
+                    // Add options based on the fetched data
+                    data.forEach(product => {
+                        var optionElement = document.createElement('option');
+                        optionElement.value = product.id; // Adjust this based on your product data
+                        optionElement.text = product.product_name; // Adjust this based on your product data
+                        productSelect.appendChild(optionElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching product options:', error));
+
+            function addMoreProductFields() {
+                // Create new label for the dropdown menu
+                var newProductLabel = document.createElement('label');
+                newProductLabel.innerHTML = 'اختر المنتج';
+                newProductLabel.setAttribute('for', 'additionalProduct[]');
+
+                // Create new dropdown menu
+                var newProductSelect = document.createElement('select');
+                newProductSelect.className = 'form-control';
+                newProductSelect.name = 'additionalProduct[]'; // Use an array to handle multiple selections
+
+                // TODO: Add options to the new dropdown menu (you can fetch these dynamically from your database)
+                fetch('pages/get_cafe_porducts.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Populate the dropdown menu with options
+                        data.forEach(option => {
+                            var optionElement = document.createElement('option');
+                            optionElement.value = option.id; // Set the value based on your product data
+                            optionElement.text = option.product_name; // Set the display text based on your product data
+                            newProductSelect.appendChild(optionElement);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching product options:', error));
+
+                // Create new label for the quantity input field
+                var newQuantityLabel = document.createElement('label');
+                newQuantityLabel.innerHTML = 'الكمية';
+                newQuantityLabel.setAttribute('for', 'additionalQuantity[]');
+
+                // Create new quantity input field
+                var newQuantityInput = document.createElement('input');
+                newQuantityInput.type = 'number';
+                newQuantityInput.className = 'form-control';
+                newQuantityInput.name = 'additionalQuantity[]'; // Use an array to handle multiple inputs
+                newQuantityInput.required = true;
+                newQuantityInput.value = 1;
+                newQuantityInput.min = 1;
+
+                // Append the new labels and fields to the container
+                document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
+                document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
+                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
+                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
+            }
         </script>
+
+        <!-- ... Your existing PHP code ... -->
+
     </div>
     <!-- /.container-fluid -->
 

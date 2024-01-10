@@ -1,1 +1,7 @@
 Passwords : 123456
+
+Sessions : 
+    $_SESSION['is_admin'] 
+    $_SESSION['username'] 
+    $_SESSION['user_id']
+    $_SESSION['message_error']
