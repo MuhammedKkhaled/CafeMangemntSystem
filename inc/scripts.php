@@ -21,6 +21,7 @@
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8P+ua/1/RS6R5Lb4bUGn5e2I2EQ6EN3aj4AiWy12X6JKMC+aaFPtF6x9Y7a" crossorigin="anonymous"></script>
 
 <script>
     // JavaScript to update the copyright year

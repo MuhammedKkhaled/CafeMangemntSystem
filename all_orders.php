@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-$page_title = 'Orders Details';
+$page_title = 'All Orders';
 
 if (isset($_SESSION['username'])) {
     require_once("inc/header.php");
@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
     /// get the currentdate and id for registered user 
     $currentDate = date("Y-m-d");
     $userId = $_SESSION["user_id"];
-   
+
     /// get the orders where it's created_date today and it's registered by the logged in user
     $query = "SELECT * FROM `cafe_orders` WHERE date(`created_at`) = '$currentDate' And `user_id` =$userId";
 
@@ -25,7 +25,7 @@ if (isset($_SESSION['username'])) {
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-center mb-4">
-            <h1 class="h3 mb-0 text-gray-900">تفاصيل طلبات اليوم </h1>
+            <h1 class="h3 mb-0 text-gray-900">تفاصيل طلبات الكافيه لهذا اليوم </h1>
 
         </div>
         <!-- Content Row -->
@@ -49,9 +49,10 @@ if (isset($_SESSION['username'])) {
             <div class="col-md-4"></div>
         </div> -->
 
-        <div class="row">
+        <div class="row align-items-center justify-content-center">
             <?php
             if (mysqli_num_rows($result) > 0) {
+                $iterator = 0;
             ?>
                 <table class="table table-striped">
                     <thead>
@@ -63,22 +64,35 @@ if (isset($_SESSION['username'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="">
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
+                        <?php
+                        while ($rows = mysqli_fetch_assoc($result)) { ?>
+                            <tr class="">
+                                <th scope="row"> <?= ++$iterator ?></th>
+                                <td><?= $rows['total_price'] ?></td>
+                                <td>
+                                    <?= $rows['id'] ?>
+                                </td>
+                                <td>
+                                    <a href="order_details.php?id=<?= $rows["id"] ?>" class="btn btn-success"> تفصايل الطلب </a>
+                                    <a href="edit_order.php?id=<?= $rows["id"] ?>" class="btn btn-info">تعديل </a>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
-            <?php } else {
-                echo "مفيش اوردارت";
-            }
+            <?php
+            } else { ?>
+                <div class="alert alert-danger">
+                    لا يوجد طلبات لهذا المستخدم في هذا اليوم حتي الان
+                </div>
+            <?php }
             ?>
         </div>
         <!-- Content Row -->
 
         <!-- Content Row -->
+        <a href="cafe.php" class="btn btn-danger">عودة للخلف </a>
+
     </div>
     <!-- /.container-fluid -->
 

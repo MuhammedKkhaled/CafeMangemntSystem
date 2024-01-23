@@ -22,6 +22,11 @@ if (isset($_SESSION['username'])) {
     $food_query_result = mysqli_query($conn, $food_query);
 
 
+    /// Playstation Query 
+    $playstationQuery = "SELECT * FROM `playstation_configuration`  LIMIT 8";
+
+    /// Execute The query 
+    $playstationQueryResult = mysqli_query($conn, $playstationQuery);
 ?>
 
 
@@ -120,70 +125,38 @@ if (isset($_SESSION['username'])) {
             بلاستيسشن
         </a>
         <div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    مكسب (شهري)
+            <?php
+            if (mysqli_num_rows($playstationQueryResult) > 0) {
+                while ($playstationRows = mysqli_fetch_assoc($playstationQueryResult)) {
+
+            ?>
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
+                                            <?= $playstationRows['playstation_type'] ?>
+                                        </div>
+                                        <div class="text-md font-weight-bold text-primary text-uppercase mt-2">
+                                            <?= $playstationRows['controllers_type'] ?>
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <?= $playstationRows['price_per_hour'] ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-gamepad fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    463.50 ج م
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    المكسب السنوي
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    500,000.00 ج م
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    الموردين
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    12
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+                }
+            }
+            ?>
         </div>
         <!-- End Playstaion Content  -->
 

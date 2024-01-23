@@ -92,8 +92,8 @@
                  <div class="bg-white py-2 collapse-inner rounded">
                      <!-- <h6 class="collapse-header">اخري</h6> -->
                      <a class="collapse-item" href="cafe.php">كافيه / بار</a>
-                     <a class="collapse-item" href="register.html"> العربية </a>
-                     <a class="collapse-item" href="forgot-password.html">بلاستيشن </a>
+                     <a class="collapse-item" href="foodcar.php"> العربية </a>
+                     <a class="collapse-item" href="playstaion.php">بلاستيشن </a>
                      <!-- <div class="collapse-divider"></div>
                      <h6 class="collapse-header">صفحات اخري</h6>
                      <a class="collapse-item" href="404.html">404 Page</a>

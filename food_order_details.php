@@ -1,13 +1,36 @@
-Passwords : 123456
+<?php
+session_start();
+$page_title = 'Food Order Details';
 
-Sessions : 
-    $_SESSION['is_admin'] 
-    $_SESSION['username'] 
-    $_SESSION['user_id']
-    $_SESSION['message_error']
+if (isset($_SESSION['username'])) {
+    require_once("inc/header.php");
+    require_once("inc/sidebar.php");
+    require_once("inc/navbar.php");
+    require_once("DB/db_config.php");
 
+    // Get the order ID from the GET request
+    $orderId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-   <?php if (mysqli_num_rows($result) > 0) { ?>
+    // Query to get order details and product names for food orders
+    $query = "SELECT fo.id AS order_id, fo.total_price, fp.food_name, fpo.quantity, fpo.each_price, fpo.total_price AS product_total_price
+    FROM food_orders fo
+    JOIN food_products_order fpo ON fo.id = fpo.food_order_id
+    JOIN foodcar_products fp ON fpo.food_product_id = fp.id
+    WHERE fo.id = $orderId";
+
+    // Apply the query
+    $result = mysqli_query($conn, $query);
+?>
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-center mb-4">
+            <h1 class="h3 mb-0 text-gray-900">تفاصيل الطلب رقم <?= $orderId ?></h1>
+        </div>
+        <!-- Content Row -->
+        <div class="row align-items-center justify-content-center">
+            <?php if (mysqli_num_rows($result) > 0) { ?>
                 <table class="table table-striped">
                     <thead>
                         <tr class="text-gray-800">
@@ -42,3 +65,17 @@ Sessions :
                     لا توجد تفاصيل للطلب رقم <?= $orderId ?> حتى الآن.
                 </div>
             <?php } ?>
+        </div>
+        <!-- Content Row -->
+        <a href="all_food_order.php" class="btn btn-danger">عودة</a>
+    </div>
+    <!-- /.container-fluid -->
+
+<?php
+    require_once("inc/footer.php");
+    require_once("inc/scripts.php");
+} else {
+    header("Location: index.php");
+    exit();
+}
+?>

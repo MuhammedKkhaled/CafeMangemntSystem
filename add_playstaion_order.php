@@ -91,18 +91,45 @@ if (isset($_SESSION['username'])) {
                     <?php }
                     unset($_SESSION['error_message']);
                     ?>
-                    <form id="addOrderForm" method="post" action="Pages/insert_cafe_products.php">
+                    <form id="addOrderForm" method="post" action="Pages/insert_playstation_order.php">
                         <div class="form-group">
-                            <label for="productSelect"> اختر المنتج الرئيسي</label>
+                            <label for="">نوع الجهاز</label>
                             <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
-                            <select class="form-control" id="productSelect" name="product">
+                            <!-- <select class="form-control" id="productSelect" name="product">
                                 <option value="0">برجاء اختيار المنتج</option>
-                            </select>
+                            </select> -->
+                            <div class="">
+                                <label for="ps4">PS4</label>
+                                <input type="radio" name="playstationproduct" id="ps4" value="ps4">
+                            </div>
+                            <!-- <label for="ps5"> PS5</label> -->
+                            <div class="">
+                                <label for="ps5">PS5</label>
+                                <input type="radio" name="playstationproduct" id="ps5" value="ps5">
+                            </div>
+
                         </div>
                         <div class="form-group">
+                            <label for="">سنجل ولا مالتي </label>
+                            <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
+                            <!-- <select class="form-control" id="productSelect" name="product">
+                                <option value="0">برجاء اختيار المنتج</option>
+                            </select> -->
+                            <div class="">
+                                <label for="single">سنجل </label>
+                                <input type="radio" name="playstationControllerType" id="single" value="single">
+                            </div>
+                            <!-- <label for="ps5"> PS5</label> -->
+                            <div class="">
+                                <label for="multi">مالتي</label>
+                                <input type="radio" name="playstationControllerType" id="multi" value="multi">
+                            </div>
+
+                        </div>
+                        <!-- <div class="form-group">
                             <label for="quantityInput">الكمية</label>
                             <input type="number" class="form-control" id="quantityInput" name="quantity" required min="1" value="1">
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <div id="additionalProductFieldsContainer"></div>
                         </div>
@@ -110,10 +137,10 @@ if (isset($_SESSION['username'])) {
                     </form>
                     <!-- Add more products button -->
 
-                    <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات آخرى للطلب </button>
+                    <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات من الكافيه</button>
                     <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsFood">إضافة منتجات من عربية الاكل </button>
                     <div class="form-group mt-3">
-                        <a href="cafe.php" class="btn btn-danger"> رجوع للخلف</a>
+                        <a href="playstaion.php" class="btn btn-danger"> رجوع للخلف</a>
                     </div>
 
                     <!-- Container to dynamically add more product fields -->
@@ -130,7 +157,7 @@ if (isset($_SESSION['username'])) {
                 alert('جاري اضافة طلب العميل متنساش تضحك في وشه بقا ');
             });
 
-            // Example JavaScript code for handling "Add more products" button click
+            // Example JavaScript code for handling "Add more products" button click (Related With Cafe)
             document.getElementById('addMoreProductsBtn').addEventListener('click', function() {
                 // Add your logic to handle adding more products, e.g., show/hide additional form fields
                 addMoreProductFields();
@@ -141,35 +168,36 @@ if (isset($_SESSION['username'])) {
                 // Add your logic to handle adding more products, e.g., show/hide additional form fields
                 addMoreProductFoodFields();
             });
+
             // Fetch products and populate the dropdown
-            fetch('pages/get_cafe_porducts.php')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    var productSelect = document.getElementById('productSelect');
+            // fetch('pages/get_playstation_products.php')
+            //     .then(response => {
+            //         if (!response.ok) {
+            //             throw new Error(`HTTP error! Status: ${response.status}`);
+            //         }
+            //         return response.json();
+            //     })
+            //     .then(data => {
+            //         var productSelect = document.getElementById('productSelect');
 
-                    // Clear existing options (if any)
-                    productSelect.innerHTML = '';
+            //         // Clear existing options (if any)
+            //         productSelect.innerHTML = '';
 
-                    // Add a default option
-                    var defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.text = 'برجاء اختيار المنتج';
-                    productSelect.appendChild(defaultOption);
+            //         // Add a default option
+            //         var defaultOption = document.createElement('option');
+            //         defaultOption.value = '';
+            //         defaultOption.text = 'برجاء اختيار المنتج';
+            //         productSelect.appendChild(defaultOption);
 
-                    // Add options based on the fetched data
-                    data.forEach(product => {
-                        var optionElement = document.createElement('option');
-                        optionElement.value = product.id; // Adjust this based on your product data
-                        optionElement.text = product.product_name; // Adjust this based on your product data
-                        productSelect.appendChild(optionElement);
-                    });
-                })
-                .catch(error => console.error('Error fetching product options:', error));
+            //         // Add options based on the fetched data
+            //         data.forEach(product => {
+            //             var optionElement = document.createElement('option');
+            //             optionElement.value = product.id; // Adjust this based on your product data
+            //             optionElement.text = product.playstation_type; // Adjust this based on your product data
+            //             productSelect.appendChild(optionElement);
+            //         });
+            //     })
+            //     .catch(error => console.error('Error fetching product options:', error));
 
             function addMoreProductFields() {
                 // Create new label for the dropdown menu
@@ -216,6 +244,7 @@ if (isset($_SESSION['username'])) {
                 document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
                 document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
             }
+
 
             function addMoreProductFoodFields() {
                 // Create new label for the dropdown menu

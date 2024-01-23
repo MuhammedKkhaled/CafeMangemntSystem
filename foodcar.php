@@ -10,7 +10,7 @@ if (isset($_SESSION['username'])) {
 
 
     //// Get the Full cafe_products 
-    $query = "SELECT * FROM `cafe_products`  ";
+    $query = "SELECT * FROM `foodcar_products`  ";
 
     // execute the query 
     $result = mysqli_query($conn, $query);
@@ -22,7 +22,7 @@ if (isset($_SESSION['username'])) {
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-center mb-4">
-            <h1 class="h3 mb-0 text-gray-900">الكافيه</h1>
+            <h1 class="h3 mb-0 text-gray-900">عربية الاكل</h1>
 
         </div>
         <!-- Content Row -->
@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])) {
 
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-4">
-                <a href="add_cafe_order.php" class="btn-lg mb-2 text-center btn btn-primary">
+                <a href="add_food_order.php" class="btn-lg mb-2 text-center btn btn-primary">
                     اضافة طلب
                 </a>
             </div>
@@ -39,7 +39,7 @@ if (isset($_SESSION['username'])) {
                 <h1 class="h5 mb-0 text-gray-800">المنيو</h1>
             </div>
             <div class="col-md-4 text-center">
-                <a href="all_orders.php" class="btn-lg mb-2 text-center btn btn-primary">
+                <a href="all_food_order.php" class="btn-lg mb-2 text-center btn btn-primary">
                     معرفة تفاصيل الاوردارات
                 </a>
             </div>
@@ -60,14 +60,14 @@ if (isset($_SESSION['username'])) {
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
-                                            <?= $row['product_name'] ?>
+                                            <?= $row['food_name'] ?>
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <?= $row['product_price'] ?>
+                                            <?= $row['food_price'] ?>
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <i class="fas fa-coffee fa-2x text-gray-300"></i>
+                                        <i class="fas fa-pizza-slice fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
                             </div>
