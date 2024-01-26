@@ -7,10 +7,12 @@ require_once("../DB/db_config.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     /// Validate (Required Data)
-    if (!empty($_POST['product']) && (!empty($_POST['quantity']) && $_POST['quantity'] > 0)) {
+    if (!empty($_POST['additionalProduct']) && (!empty($_POST['additionalQuantity']) && $_POST['additionalQuantity'] > 0)) {
         // Main product data
-        $mainProductID = $_POST["product"];
-        $mainQuantity = $_POST["quantity"];
+
+        // Additional products data (if available)
+        $additionalProducts = isset($_POST["additionalProduct"]) ? $_POST["additionalProduct"] : [];
+        $additionalQuantities = isset($_POST["additionalQuantity"]) ? $_POST["additionalQuantity"] : [];
     } else {
         // Empty data have been sent 
         $_SESSION['error_message'] = "لا تنسى اختيار المنتج الرئيسي ";
@@ -19,10 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-
-    // Additional products data (if available)
-    $additionalProducts = isset($_POST["additionalProduct"]) ? $_POST["additionalProduct"] : [];
-    $additionalQuantities = isset($_POST["additionalQuantity"]) ? $_POST["additionalQuantity"] : [];
 
     // Additional Food Products if Available 
     $additionalfoodproducts = isset($_POST["additionalfoodproducts"]) ? $_POST["additionalfoodproducts"] : [];
@@ -37,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insert data into cafe_orders table
         $insertOrderSQL = "INSERT INTO cafe_orders (total_price, user_id) VALUES (?, ?)";
         $stmtOrder = mysqli_prepare($conn, $insertOrderSQL);
-        $totalOrderPrice = calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities);
+        $totalOrderPrice = calculateTotalOrderPrice($additionalProducts, $additionalQuantities);
         $totalFoodProductsPrice = calculateTotalOrderPriceForFoodProudcts($additionalfoodproducts, $additionalfoodQuantities);
         $totalOrderPrice += $totalFoodProductsPrice;
         $userID = $_SESSION['user_id'];
@@ -45,13 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_execute($stmtOrder);
         $cafeOrderID = mysqli_insert_id($conn); // Get the last inserted ID
 
-        // Insert data into cafe_products_orders table for the main product
-        $insertMainProductSQL = "INSERT INTO cafe_products_orders (cafe_order_id, cafe_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
-        $stmtMainProduct = mysqli_prepare($conn, $insertMainProductSQL);
-        $mainProductPrice = calculateProductPrice($mainProductID);
-        $total_price = $mainProductPrice * $mainQuantity;
-        mysqli_stmt_bind_param($stmtMainProduct, 'iiidd', $cafeOrderID, $mainProductID, $mainQuantity, $mainProductPrice,  $total_price);
-        mysqli_stmt_execute($stmtMainProduct);
 
         // Insert data into cafe_products_orders table for additional products (if available)
         if (!empty($additionalProducts)) {
@@ -95,9 +86,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Function to calculate the total order price For cafe products only
-function calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities)
+function calculateTotalOrderPrice($additionalProducts, $additionalQuantities)
 {
-    $totalPrice = calculateProductPrice($mainProductID) * $mainQuantity; /// 10 * 5 = 50
+    $totalPrice = 0;
 
     foreach ($additionalProducts as $index => $additionalProduct) {
         $additionalProductPrice = calculateProductPrice($additionalProduct);

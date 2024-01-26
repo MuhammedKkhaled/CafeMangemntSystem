@@ -92,17 +92,7 @@ if (isset($_SESSION['username'])) {
                     unset($_SESSION['error_message']);
                     ?>
                     <form id="addOrderForm" method="post" action="Pages/insert_cafe_products.php">
-                        <div class="form-group">
-                            <label for="productSelect"> اختر المنتج الرئيسي</label>
-                            <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
-                            <select class="form-control" id="productSelect" name="product">
-                                <option value="0">برجاء اختيار المنتج</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="quantityInput">الكمية</label>
-                            <input type="number" class="form-control" id="quantityInput" name="quantity" required min="1" value="1">
-                        </div>
+
                         <div class="form-group">
                             <div id="additionalProductFieldsContainer"></div>
                         </div>
