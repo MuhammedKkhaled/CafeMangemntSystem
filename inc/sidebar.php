@@ -5,7 +5,7 @@
          <div class="sidebar-brand-icon rotate-n-15">
              <i class="fas fa-laugh-wink"></i>
          </div>
-         <div class="sidebar-brand-text mx-3">كافيه البرنامج</div>
+         <div class="sidebar-brand-text mx-3"> AREA 51 CAFE</div>
      </a>
 
      <!-- Divider -->
@@ -16,7 +16,7 @@
         if ($_SESSION['is_admin']) :
         ?>
          <li class="nav-item active">
-             <a class="nav-link" href="index.html">
+             <a class="nav-link" href="#">
                  <i class="fas fa-fw fa-tachometer-alt"></i>
                  <span>لوحة التحكم </span></a>
          </li>
