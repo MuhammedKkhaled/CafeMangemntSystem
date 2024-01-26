@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
     JOIN foodcar_products AS fp ON ppo.foodcar_product_id = fp.id
     WHERE playstation_session_id = $session_id AND foodcar_product_id IS NOT NULL
     
-    UNION
+    UNION ALL
     
     SELECT  cp.product_name, ppo.qunatity , ppo.each_price, ppo.total_price
     FROM playstation_product_order AS ppo

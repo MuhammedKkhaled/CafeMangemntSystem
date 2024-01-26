@@ -12,11 +12,20 @@ if (isset($_SESSION['username'])) {
     $orderId = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
     // Query to get order details and product names for food orders
-    $query = "SELECT fo.id AS order_id, fo.total_price, fp.food_name, fpo.quantity, fpo.each_price, fpo.total_price AS product_total_price
-    FROM food_orders fo
-    JOIN food_products_order fpo ON fo.id = fpo.food_order_id
-    JOIN foodcar_products fp ON fpo.food_product_id = fp.id
-    WHERE fo.id = $orderId";
+    $query = "SELECT fp.food_name as 'Product Name' , fpo.quantity , fpo.each_price , fpo.total_price 
+    FROM  food_products_order AS fpo
+    JOIN foodcar_products AS fp 
+    ON fpo.food_product_id = fp.id
+    WHERE fpo.food_order_id = $orderId AND  fpo.food_product_id IS NOT NULL 
+    
+    UNION ALL 
+    
+    SELECT cp.product_name AS 'Product Name' , fpo.quantity , fpo.each_price , fpo.total_price
+    FROM food_products_order AS fpo
+    JOIN cafe_products AS cp 
+    ON fpo.cafe_product_id = cp.id 
+    WHERE fpo.food_order_id = $orderId AND fpo.cafe_product_id IS NOT NULL; 
+    ";
 
     // Apply the query
     $result = mysqli_query($conn, $query);
@@ -45,12 +54,12 @@ if (isset($_SESSION['username'])) {
                         $totalOrderPrice = 0;
                         while ($rows = mysqli_fetch_assoc($result)) { ?>
                             <tr class="">
-                                <td><?= $rows['food_name'] ?></td>
+                                <td><?= $rows['Product Name'] ?></td>
                                 <td><?= $rows['quantity'] ?></td>
                                 <td><?= $rows['each_price'] ?></td>
-                                <td><?= $rows['product_total_price'] ?></td>
+                                <td><?= $rows['total_price'] ?></td>
                                 <?php
-                                $totalOrderPrice += $rows['product_total_price'];
+                                $totalOrderPrice += $rows['total_price'];
                                 ?>
                             </tr>
                         <?php } ?>

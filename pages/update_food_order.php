@@ -3,8 +3,20 @@ session_start();
 
 // Database Configuration Included 
 require_once("../DB/db_config.php");
-
+require_once("../functions/dd.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+    // dd($_POST);
+
+
+    // Additional Food products Data (if Available)
+    $additionalFoodProducts = isset($_POST['additionalFoodProduct']) ? $_POST["additionalFoodProduct"] : [];
+    $additionalFoodQuantities = isset($_POST['additionalFoodQuantity']) ? $_POST["additionalFoodQuantity"] : [];
+
+    // Additional Cafe products Data (if Available)
+    $additionalCafeProducts = isset($_POST['additionalCafeProduct']) ? $_POST["additionalCafeProduct"] : [];
+    $additionalCafeQuantities = isset($_POST['additionalCafeQuantity']) ? $_POST["additionalCafeQuantity"] : [];
 
     // Get the order_id
     $orderID = $_GET['order_id'];
@@ -12,11 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get The order Old price
     $oldOrderPrice = $_GET['old_price'];
 
-    if (!empty($_POST['Product']) && (!empty($_POST['Quantity']) && $_POST['Quantity'] > 0)) {
-        // Main product data
-        $mainProductID = $_POST["Product"];
-        $mainQuantity = $_POST["Quantity"];
-    } else {
+    if (empty($additionalFoodProducts) && empty($additionalCafeProducts)) {
         // Empty data have been sent 
         $_SESSION['error_message'] = "لا تنسى اختيار المنتج الاضافي لمتابعة الطلب";
         $referrerPage = $_SERVER['HTTP_REFERER'];
@@ -24,9 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Additional products Data (if Available)
-    $additionalProducts = isset($_POST['additionalProduct']) ? $_POST["additionalProduct"] : [];
-    $additionalQuantities = isset($_POST['additionalQuantity']) ? $_POST["additionalQuantity"] : [];
 
     try {
 

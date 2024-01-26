@@ -15,11 +15,8 @@ if (isset($_SESSION['username'])) {
     $query = "SELECT fp.food_name as 'Product Name', cpo.quantity , cpo.each_price, cpo.total_price 
             FROM cafe_products_orders AS cpo 
             JOIN foodcar_products AS fp ON cpo.food_product_id = fp.id 
-            WHERE cafe_order_id= $orderId  AND food_product_id IS NOT NULL 
-            
-            
-            UNION 
-            
+            WHERE cafe_order_id = $orderId  AND food_product_id IS NOT NULL 
+            UNION ALL
             SELECT cp.product_name, cpo.quantity , cpo.each_price, cpo.total_price 
             FROM cafe_products_orders AS cpo 
             JOIN cafe_products AS cp ON cpo.cafe_product_id = cp.id 
@@ -30,6 +27,8 @@ if (isset($_SESSION['username'])) {
 
     // Apply the query
     $result = mysqli_query($conn, $query);
+
+
 ?>
 
     <!-- Begin Page Content -->

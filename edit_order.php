@@ -23,7 +23,7 @@ if (isset($_SESSION['username'])) {
     WHERE cafe_order_id= $orderId  AND food_product_id IS NOT NULL 
     
     
-    UNION 
+    UNION ALL
     
     SELECT cp.product_name, cpo.quantity , cpo.each_price, cpo.total_price 
     FROM cafe_products_orders AS cpo 
@@ -80,7 +80,6 @@ if (isset($_SESSION['username'])) {
 
                 <!-- Add a form for adding more products -->
                 <div class="container mt-5">
-
                     <div class="row">
                         <div class="col-md-6 offset-md-3">
                             <div class="d-sm-flex align-items-center justify-content-center mb-4">
@@ -98,18 +97,8 @@ if (isset($_SESSION['username'])) {
                             <?php }
                             unset($_SESSION['error_message']);
                             ?>
-                            <form id="addOrderForm" method="post" action="Pages/update_cafe_order.php">
-                                <div class="form-group">
-                                    <label for="productSelect"> اختر المنتج الرئيسي</label>
-                                    <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
-                                    <select class="form-control" id="productSelect" name="product">
-                                        <option value="0">برجاء اختيار المنتج</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="quantityInput">الكمية</label>
-                                    <input type="number" class="form-control" id="quantityInput" name="quantity" required min="1" value="1">
-                                </div>
+                            <form id="addOrderForm" method="post" action="Pages/update_cafe_order.php?order_id=<?= $orderId ?>&old_price=<?= $orderDetails['total_price'] ?>">
+
                                 <div class="form-group">
                                     <div id="additionalProductFieldsContainer"></div>
                                 </div>

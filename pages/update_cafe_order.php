@@ -3,32 +3,30 @@ session_start();
 
 //// DataBase Configuration Included 
 require_once("../DB/db_config.php");
-
+require_once("../functions/dd.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
-    echo "<pre>";
-    print_r($_POST);
-    exit;
-
+    // dd($_POST);
+    // dd($_GET);
     ///Get the order_id
     $orderID = $_GET['order_id'];
-
     /// Get The order Old price
     $oldOrderPrice = $_GET['old_price'];
 
 
-    if (!empty($_POST['Product']) && (!empty($_POST['Quantity']) && $_POST['Quantity'] > 0)) {
-        // Main product data
-        $mainProductID = $_POST["Product"];
-        $mainQuantity = $_POST["Quantity"];
-    } else {
-        // Empty data have been sent 
-        $_SESSION['error_message'] = "لا تنسى اختيار المنتج الاضافي لمتابعة الطلب";
-        $referrerPage = $_SERVER['HTTP_REFERER'];
-        header("Location: $referrerPage");
-        exit();
-    }
+
+    // if (!empty($_POST['product']) && (!empty($_POST['quantity']) && $_POST['quantity'] > 0)) {
+    //     // Main product data
+    //     $mainProductID = $_POST["product"];
+    //     $mainQuantity = $_POST["quantity"];
+    // } else {
+    //     // Empty data have been sent 
+    //     $_SESSION['error_message'] = "لا تنسى اختيار المنتج الاضافي لمتابعة الطلب";
+    //     $referrerPage = $_SERVER['HTTP_REFERER'];
+    //     header("Location: $referrerPage");
+    //     exit();
+    // }
 
     /// Additional products Data (if Available)
     $additionalProducts = isset($_POST['additionalProduct']) ? $_POST["additionalProduct"] : [];
@@ -47,20 +45,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             SET `total_price` = ?
                             WHERE `id` = ?";
         $stmtOrder = mysqli_prepare($conn, $updateOrderSQl);
-        $newOrderPrice = calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities);
+        $newOrderPrice = calculateTotalOrderPrice($additionalProducts, $additionalQuantities);
         $newOrderPrice += $oldOrderPrice;
-        $orderFoodProductPrice = calculateTotalOrderPriceForFoodProudcts($additionalfoodproducts, $additionalfoodQuantities);
+        $orderFoodProductPrice = calculateTotalOrderPriceForFoodProudcts($additionalfoodproducts, $additionalFoodQuantities);
         $newOrderPrice += $orderFoodProductPrice;
         mysqli_stmt_bind_param($stmtOrder, 'di', $newOrderPrice, $orderID);
         mysqli_stmt_execute($stmtOrder);
 
-        // Insert data into cafe_products_orders table for the main product
-        $insertMainProductSQL = "INSERT INTO cafe_products_orders (cafe_order_id, cafe_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
-        $stmtMainProduct = mysqli_prepare($conn, $insertMainProductSQL);
-        $mainProductPrice = calculateProductPrice($mainProductID);
-        $total_price = $mainProductPrice * $mainQuantity;
-        mysqli_stmt_bind_param($stmtMainProduct, 'iiidd', $orderID, $mainProductID, $mainQuantity, $mainProductPrice,  $total_price);
-        mysqli_stmt_execute($stmtMainProduct);
+        // // Insert data into cafe_products_orders table for the main product
+        // $insertMainProductSQL = "INSERT INTO cafe_products_orders (cafe_order_id, cafe_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
+        // $stmtMainProduct = mysqli_prepare($conn, $insertMainProductSQL);
+        // $mainProductPrice = calculateProductPrice($mainProductID);
+        // $total_price = $mainProductPrice * $mainQuantity;
+        // mysqli_stmt_bind_param($stmtMainProduct, 'iiidd', $orderID, $mainProductID, $mainQuantity, $mainProductPrice,  $total_price);
+        // mysqli_stmt_execute($stmtMainProduct);
 
         // Insert data into cafe_products_orders table for additional products (if available)
         if (!empty($additionalProducts)) {
@@ -81,8 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmtAdditionalProduct = mysqli_prepare($conn, $insertAdditionalProductSQL);
             for ($i = 0; $i < count($additionalfoodproducts); $i++) {
                 $additionalProductPrice = calculateFoodProductPrice($additionalfoodproducts[$i]);
-                $totalAdditionalPrice =  $additionalProductPrice * $additionalfoodQuantities[$i];
-                mysqli_stmt_bind_param($stmtAdditionalProduct, 'iiidd', $cafeOrderID, $additionalfoodproducts[$i], $additionalfoodQuantities[$i], $additionalProductPrice, $totalAdditionalPrice);
+                $totalAdditionalPrice =  $additionalProductPrice * $additionalFoodQuantities[$i];
+                mysqli_stmt_bind_param($stmtAdditionalProduct, 'iiidd', $orderID, $additionalfoodproducts[$i], $additionalFoodQuantities[$i], $additionalProductPrice, $totalAdditionalPrice);
                 mysqli_stmt_execute($stmtAdditionalProduct);
             }
         }
@@ -90,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /// Commit the transaction 
         mysqli_commit($conn);
 
-        $referrerPage = $_SERVER['HTTP_REFERER'];
-        header("Location: $referrerPage");
+
+        header("Location: ../all_orders.php");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction in case of an error occuired
@@ -107,9 +105,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 // Function to calculate the total order price
-function calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities)
+function calculateTotalOrderPrice($additionalProducts, $additionalQuantities)
 {
-    $totalPrice = calculateProductPrice($mainProductID) * $mainQuantity; /// 10 * 5 = 50
+    $totalPrice = 0; /// 10 * 5 = 50
 
     foreach ($additionalProducts as $index => $additionalProduct) {
         $additionalProductPrice = calculateProductPrice($additionalProduct);

@@ -14,7 +14,14 @@ if (isset($_SESSION['username'])) {
     $userId = $_SESSION["user_id"];
 
     // Get the food orders created today by the logged-in user
-    $query = "SELECT * FROM `food_orders` WHERE DATE(`created_at`) = '$currentDate' AND `user_id` = $userId";
+    $query = "SELECT fo.total_price AS 'total_price' , fo.id as 'id'  FROM `food_orders` AS fo
+    JOIN tables AS t
+    ON fo.table_id = t.id
+    WHERE fo.user_id = $userId 
+    AND 
+    t.is_available = 0 
+    ";
+
 
     // Apply the query
     $result = mysqli_query($conn, $query);
