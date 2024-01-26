@@ -35,46 +35,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
 
+        // Begin transaction
         mysqli_begin_transaction($conn);
 
-        // Update Food_order price 
-        $updateOrderSQl = "UPDATE `food_orders` 
-                            SET `total_price` = ?
-                            WHERE `id` = ?";
-        $stmtOrder     = mysqli_prepare($conn, $updateOrderSQl);
-        $newOrderPrice = calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities);
-        $newOrderPrice += $oldOrderPrice;
-        mysqli_stmt_bind_param($stmtOrder, 'di', $newOrderPrice, $orderID);
+        // Insert data into cafe_orders table
+        $updateOrderStmt = "UPDATE food_orders SET total_price = ? WHERE id = $orderID";
+        $stmtOrder = mysqli_prepare($conn, $updateOrderStmt);
+        $totalOrderPriceForCafe = calculateTotalOrderPriceCafeProducts($additionalCafeProducts, $additionalCafeQuantities);
+        $totalOrderPriceForFood = calculateTotalOrderPriceFoodProducts($additionalFoodProducts, $additionalFoodQuantities);
+        $totalOrderPrice = $totalOrderPriceForCafe + $totalOrderPriceForFood;
+        $totalOrderPrice += $oldOrderPrice;
+        $userID = $_SESSION['user_id'];
+        mysqli_stmt_bind_param($stmtOrder, 'i', $totalOrderPrice);
         mysqli_stmt_execute($stmtOrder);
 
-        // Insert data into food_products_order table for the main product
-        $insertMainProductSQL = "INSERT INTO food_products_order (food_order_id, food_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
-        $stmtMainProduct = mysqli_prepare($conn, $insertMainProductSQL);
-        $mainProductPrice = calculateProductPrice($mainProductID);
-        $total_price = $mainProductPrice * $mainQuantity;
-        mysqli_stmt_bind_param($stmtMainProduct, 'iiidd', $orderID, $mainProductID, $mainQuantity, $mainProductPrice,  $total_price);
-        mysqli_stmt_execute($stmtMainProduct);
 
-        // Insert data into food_products_order table for additional products (if available)
-        if (!empty($additionalProducts)) {
-            $insertAdditionalProductSQL = "INSERT INTO food_products_order (food_order_id, food_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
+
+        // Insert data into cafe_products_orders table for additional products (if available)
+        if (!empty($additionalCafeProducts)) {
+            $insertAdditionalProductSQL = "INSERT INTO food_products_order (food_order_id, cafe_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
             $stmtAdditionalProduct = mysqli_prepare($conn, $insertAdditionalProductSQL);
-            for ($i = 0; $i < count($additionalProducts); $i++) {
-                $additionalProductPrice = calculateProductPrice($additionalProducts[$i]);
-                $totalAdditionalPrice =  $additionalProductPrice * $additionalQuantities[$i];
-                mysqli_stmt_bind_param($stmtAdditionalProduct, 'iiidd', $orderID, $additionalProducts[$i], $additionalQuantities[$i], $additionalProductPrice, $totalAdditionalPrice);
+            for ($i = 0; $i < count($additionalCafeProducts); $i++) {
+                $additionalCafeProductPrice = calculateProductPrice($additionalCafeProducts[$i], "product_price", "cafe_products");
+                $totalAdditionalPrice =  $additionalCafeProductPrice * $additionalCafeQuantities[$i];
+                mysqli_stmt_bind_param($stmtAdditionalProduct, 'iiidd', $orderID, $additionalCafeProducts[$i], $additionalCafeQuantities[$i], $additionalCafeProductPrice, $totalAdditionalPrice);
                 mysqli_stmt_execute($stmtAdditionalProduct);
             }
         }
 
-        // Commit the transaction 
+        if (!empty($additionalFoodProducts)) {
+            $insertAdditionalProductSQL = "INSERT INTO food_products_order (food_order_id, food_product_id, quantity, each_price, total_price) VALUES (?, ?, ?, ?, ?)";
+            $stmtAdditionalProduct = mysqli_prepare($conn, $insertAdditionalProductSQL);
+            for ($i = 0; $i < count($additionalFoodProducts); $i++) {
+                $additionalProductPrice = calculateProductPrice($additionalFoodProducts[$i]);
+                $totalAdditionalPrice =  $additionalProductPrice * $additionalFoodQuantities[$i];
+                mysqli_stmt_bind_param($stmtAdditionalProduct, 'iiidd', $orderID, $additionalFoodProducts[$i], $additionalFoodQuantities[$i], $additionalProductPrice, $totalAdditionalPrice);
+                mysqli_stmt_execute($stmtAdditionalProduct);
+            }
+        }
+
+        // Commit the transaction
         mysqli_commit($conn);
 
-        $referrerPage = $_SERVER['HTTP_REFERER'];
-        header("Location: $referrerPage");
+        // echo "Order added successfully!";
+        header("Location: ../all_food_order.php");
         exit();
     } catch (Exception $e) {
-        // Rollback the transaction in case of an error occurred
+        // Rollback the transaction in case of an error occuired
         mysqli_rollback($conn);
         echo "Error: " . $e->getMessage();
     } finally {
@@ -86,24 +93,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Function to calculate the total order price
-function calculateTotalOrderPrice($mainProductID, $mainQuantity, $additionalProducts, $additionalQuantities)
+function calculateTotalOrderPriceCafeProducts($additionalProducts, $additionalQuantities)
 {
-    $totalPrice = calculateProductPrice($mainProductID) * $mainQuantity;
+    $totalPrice = 0;
 
     foreach ($additionalProducts as $index => $additionalProduct) {
-        $additionalProductPrice = calculateProductPrice($additionalProduct);
+        $additionalProductPrice = calculateProductPrice($additionalProduct, "product_price", "cafe_products");
         $totalPrice += ($additionalProductPrice * $additionalQuantities[$index]);
     }
 
     return $totalPrice;
 }
+function calculateTotalOrderPriceFoodProducts($additionalFoodProducts, $additionalFoodQuantities)
+{
+    $totalPrice = 0;
 
-// Function to calculate the price of a product
-function calculateProductPrice($productID)
+    foreach ($additionalFoodProducts as $index => $additionalProduct) {
+        $additionalProductPrice = calculateProductPrice($additionalProduct, "food_price", "foodcar_products");
+        $totalPrice += ($additionalProductPrice * $additionalFoodQuantities[$index]);
+    }
+
+    return $totalPrice;
+}
+
+// Function to calculate the price of a product (you can replace this with your actual pricing logic)
+function calculateProductPrice($productID, $column = 'food_price', $table = 'foodcar_products')
 {
     global $conn;
 
-    $query = "SELECT `food_price` FROM `foodcar_productsw` WHERE id = '$productID'";
+    $query = "SELECT $column FROM $table WHERE id = '$productID'";
 
     $result = mysqli_query($conn, $query);
 

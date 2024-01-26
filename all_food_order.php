@@ -14,7 +14,8 @@ if (isset($_SESSION['username'])) {
     $userId = $_SESSION["user_id"];
 
     // Get the food orders created today by the logged-in user
-    $query = "SELECT fo.total_price AS 'total_price' , fo.id as 'id'  FROM `food_orders` AS fo
+    $query = "SELECT fo.total_price AS 'total_price' , fo.id as 'id' , t.table_number as 'Table Number' , t.id as 'table Id'  
+    FROM `food_orders` AS fo
     JOIN tables AS t
     ON fo.table_id = t.id
     WHERE fo.user_id = $userId 
@@ -22,6 +23,8 @@ if (isset($_SESSION['username'])) {
     t.is_available = 0 
     ";
 
+    $endedOrderQuery = "SELECT * FROM food_orders WHERE ended_at IS NOT NULL AND table_id IS NULL";
+    $endedQueryResult = mysqli_query($conn, $endedOrderQuery);
 
     // Apply the query
     $result = mysqli_query($conn, $query);
@@ -47,6 +50,7 @@ if (isset($_SESSION['username'])) {
                             <th scope="col">رقم الاوردر</th>
                             <th scope="col">سعر الاوردر</th>
                             <th scope="col">كود الاوردر</th>
+                            <th scope="col">رقم الطاولة </th>
                             <th scope="col">حركات</th>
                         </tr>
                     </thead>
@@ -60,8 +64,59 @@ if (isset($_SESSION['username'])) {
                                     <?= $rows['id'] ?>
                                 </td>
                                 <td>
+                                    <?= $rows['Table Number'] ?>
+                                </td>
+                                <td>
                                     <a href="food_order_details.php?id=<?= $rows["id"] ?>" class="btn btn-success"> تفصايل الطلب </a>
-                                    <a href="edit_food_order.php?id=<?= $rows["id"] ?>" class="btn btn-info">تعديل </a>
+                                    <a href="edit_food_order.php?id=<?= $rows["id"] ?>&table_id=<?= $rows['table Id'] ?>" class="btn btn-info">تعديل / إنهاء الحساب </a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            <?php
+            } else { ?>
+                <div class="alert alert-danger">
+                    لا يوجد طلبات لهذا المستخدم في هذا اليوم حتى الآن
+                </div>
+            <?php }
+            ?>
+        </div>
+        <!-- Content Row -->
+        <!-- Content Row -->
+        <a href="foodcar.php" class="btn btn-danger">عودة للخلف</a>
+        <!-- Content Row -->
+
+        <div class="row align-items-center justify-content-center">
+            <?php
+            if (mysqli_num_rows($endedQueryResult) > 0) {
+                $iterator = 0;
+            ?>
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-gray-800">
+                            <th scope="col">رقم الاوردر</th>
+                            <th scope="col">سعر الاوردر</th>
+                            <th scope="col">كود الاوردر</th>
+                            <th scope="col">خلصت الساعة كام </th>
+                            <th scope="col">حركات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($rows = mysqli_fetch_assoc($endedQueryResult)) { ?>
+                            <tr class="">
+                                <th scope="row"> <?= ++$iterator ?></th>
+                                <td><?= $rows['total_price'] ?></td>
+                                <td>
+                                    <?= $rows['id'] ?>
+                                </td>
+                                <td>
+                                    <?= $rows['ended_at'] ?>
+                                </td>
+                                <td>
+                                    <a href="food_order_details.php?id=<?= $rows["id"] ?>" class="btn btn-success"> تفصايل الطلب </a>
+                                    <a href="#" class="btn btn-info">طباعة </a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -77,8 +132,7 @@ if (isset($_SESSION['username'])) {
         </div>
         <!-- Content Row -->
 
-        <!-- Content Row -->
-        <a href="foodcar.php" class="btn btn-danger">عودة للخلف</a>
+
     </div>
     <!-- /.container-fluid -->
 

@@ -10,7 +10,7 @@ if (isset($_SESSION['username'])) {
 
     // Get the order ID from the GET request
     $orderId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
+    $table_id = isset($_GET['table_id']) ? intval($_GET['table_id']) : 0;
     // Query to get food order details
     $orderQuery = "SELECT fo.id AS order_id, fo.total_price
                    FROM food_orders fo
@@ -41,6 +41,9 @@ if (isset($_SESSION['username'])) {
 ?>
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <a href="pages/end_food_order.php?orderId=<?= $orderId ?>&table_id=<?= $table_id ?>" class="btn btn-danger" id="endcalculations">
+                تخليص الحساب
+            </a>
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-center mb-4">
                 <h1 class="h3 mb-0 text-gray-900">تفاصيل الطلب رقم <?= $orderId ?></h1>
@@ -122,6 +125,10 @@ if (isset($_SESSION['username'])) {
                 document.getElementById('addclick').addEventListener('click', function(event) {
                     var order_id = <?= $orderId ?>;
                     alert('جاري تعديل رقم الطلب رقم ' + order_id);
+                });
+
+                document.getElementById('endcalculations').addEventListener('click', function(e) {
+                    alert("جاري إنهاء حساب الطلب ");
                 });
 
                 // Example JavaScript code for handling "Add more products" button click

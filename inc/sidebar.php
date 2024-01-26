@@ -102,18 +102,45 @@
              </div>
          </li>
      <?php } else {
-            echo " Small Dick beta3 karem";
-        } ?>
+        ?>
+         <!-- Divider -->
+         <hr class="sidebar-divider" />
+
+         <!-- Heading -->
+         <div class="sidebar-heading">الصفحات</div>
+
+         <!-- Nav Item - Pages Collapse Menu -->
+         <li class="nav-item">
+             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                 <i class="fas fa-fw fa-folder"></i>
+                 <span>صفحات</span>
+             </a>
+             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                 <div class="bg-white py-2 collapse-inner rounded">
+                     <!-- <h6 class="collapse-header">اخري</h6> -->
+                     <a class="collapse-item" href="cafe.php">كافيه / بار</a>
+                     <a class="collapse-item" href="foodcar.php"> العربية </a>
+                     <a class="collapse-item" href="playstaion.php">بلاستيشن </a>
+                     <div class="collapse-divider"></div>
+                     <h6 class="collapse-header">صفحات اخري</h6>
+                     <a class="collapse-item" href="users.php">مستخدمين </a>
+                     <a class="collapse-item" href="cafeMenu.php">منيو الكافيه</a>
+                     <a class="collapse-item" href="playstationMenu.php">منيو البلاستيشن</a>
+                     <a class="collapse-item" href="carFoodMenu.php">منيو العربية </a>
+                 </div>
+             </div>
+         </li>
+     <?php } ?>
      <!-- Nav Item - Charts -->
      <li class="nav-item">
-         <a class="nav-link" href="charts.html">
+         <a class="nav-link" href="#">
              <i class="fas fa-fw fa-chart-area"></i>
              <span>البيانات والتقارير</span></a>
      </li>
 
      <!-- Nav Item - Tables -->
      <li class="nav-item">
-         <a class="nav-link" href="tables.html">
+         <a class="nav-link" href="stock.php">
              <i class="fas fa-fw fa-table"></i>
              <span>المخازن</span></a>
      </li>
