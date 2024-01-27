@@ -31,11 +31,11 @@ if (isset($_SESSION['username'])) {
                                 <input type="password" class="form-control" id="password" name="password" required autocomplete="off">
                             </div>
                             <div class="form-group">
-                                <label for="admin">ادمن</label>
+                                <label for="admin">اختار نوع المستخدم</label>
                                 <select class="form-control" id="admin" name="is_admin" required>
-                                    <option value="">اختار نوع المستخدم</option>
-                                    <option value="1">نعم</option>
-                                    <option value="0">لا</option>
+                                    <option value="">برجاء اختيار نوع المستخدم </option>
+                                    <option value="1">ادمن </option>
+                                    <option value="0">مستخدم عادي </option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">اضافة مستخدم جديد</button>

@@ -5,7 +5,8 @@ require_once("../../DB/db_config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['user_id'])) {
 
-    dd($_POST);
+
+    $user_id = $_GET['user_id'];
     $userName = $_POST['userName'];
     $password = $_POST['password'];
     $oldPassword = $_POST['oldPassword'];
@@ -25,21 +26,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_GET['user_id'])) {
 
     // Prepare and bind the update statement
     $query = "UPDATE users SET
-                product_name = ?,
-                quantity = ?,
-                product_price = ?,
-                type = ?
-                WHERE id = ?";
+                username = ? ,
+                password = ?
+                WHERE id = ? ";
 
     $stmt = mysqli_prepare($conn, $query);
 
     // Bind parameters
-    mysqli_stmt_bind_param($stmt, 'sdisi', $product_name, $quantity, $product_price, $type, $product_id);
+    mysqli_stmt_bind_param($stmt, 'ssi', $userName, $hashedPassword, $user_id);
 
     // Execute the statement
     if (mysqli_stmt_execute($stmt)) {
 
-        header("Location: ../../stock.php");
+        header("Location: ../../users.php");
         exit();
     } else {
         echo "Error updating record: " . mysqli_error($conn);
