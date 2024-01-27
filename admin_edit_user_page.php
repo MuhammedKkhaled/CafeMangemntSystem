@@ -1,6 +1,6 @@
 <?php
 session_start();
-$page_title = 'تعديل المخزن';
+$page_title = 'تعديل ';
 if (isset($_SESSION['username'])) {
 
     if ($_SESSION['is_admin'] != 0) {

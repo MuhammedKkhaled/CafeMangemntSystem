@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])) {
 
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-4">
-                <a href="admin/stocks/addCafeProduct.php" class="btn-lg mb-2 text-center btn btn-primary">
+                <a href="adminAddCafeProduct.php" class="btn-lg mb-2 text-center btn btn-primary">
                     اضافة منتج
                 </a>
             </div>
@@ -71,7 +71,7 @@ if (isset($_SESSION['username'])) {
                         </a>
                     </div>
                     <div class="col-auto">
-                        <a href="" class="btn btn-danger">مسح </a>
+                        <a href="admin/stocks/deleteCafeProduct.php?product_id=<?= $row['id'] ?>" class="btn btn-danger">مسح </a>
                     </div>
                     <!--End Cafe Content  -->
             <?php
