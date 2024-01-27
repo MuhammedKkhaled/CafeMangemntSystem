@@ -10,7 +10,7 @@ if (isset($_SESSION['username'])) {
 
 
     //// Get the Full cafe_products 
-    $query = "SELECT * FROM `cafe_products`  ";
+    $query = "SELECT * FROM `foodcar_products`  ";
 
     // execute the query 
     $result = mysqli_query($conn, $query);
@@ -22,7 +22,7 @@ if (isset($_SESSION['username'])) {
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-center mb-4">
-            <h1 class="h3 mb-0 text-gray-900">منيو الكافيه</h1>
+            <h1 class="h3 mb-0 text-gray-900">منيو الاكل</h1>
 
         </div>
         <!-- Content Row -->
@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])) {
 
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
             <div class="col-md-4">
-                <a href="adminAddCafeProduct.php" class="btn-lg mb-2 text-center btn btn-primary">
+                <a href="adminAddFoodProduct.php" class="btn-lg mb-2 text-center btn btn-primary">
                     اضافة منتج
                 </a>
             </div>
@@ -56,10 +56,10 @@ if (isset($_SESSION['username'])) {
 
                                         <div class="col mr-2">
                                             <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
-                                                <?= $row['product_name'] ?>
+                                                <?= $row['food_name'] ?>
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?= $row['product_price'] ?>
+                                                <?= $row['food_price'] ?>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -71,7 +71,7 @@ if (isset($_SESSION['username'])) {
                         </a>
                     </div>
                     <div class="col-auto">
-                        <a href="admin/stocks/deleteCafeProduct.php?product_id=<?= $row['id'] ?>" class="btn btn-danger">مسح </a>
+                        <a href="admin/stocks/deleteFoodProduct.php?food_id=<?= $row['id'] ?>" class="btn btn-danger">مسح </a>
                     </div>
                     <!--End Cafe Content  -->
             <?php
