@@ -27,13 +27,14 @@ if (isset($_SESSION['username'])) {
                                 <input type="number" class="form-control" id="quantity" name="quantity" required>
                             </div>
                             <div class="form-group">
+                                <label for="product_price">وحدة القياس الكمية</label>
+                                <input type="text" class="form-control" id="type" name="type" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="product_price">سعر المنتج </label>
                                 <input type="number" class="form-control" id="product_price" name="product_price" required>
                             </div>
-                            <div class="form-group">
-                                <label for="product_price">نوع المنتج </label>
-                                <input type="text" class="form-control" id="type" name="type" required>
-                            </div>
+
                             <button type="submit" class="btn btn-primary">Add Product</button>
                         </form>
                         <div id="resultMessage"></div>
@@ -50,7 +51,8 @@ if (isset($_SESSION['username'])) {
                             <th scope="col">اسم المنتج</th>
                             <th scope="col">الكمية</th>
                             <th scope="col">سعر المنتج</th>
-                            <th scope="col">نوع المنتج</th>
+                            <th scope="col">وحدة القياس</th>
+                            <th scope="col"> اجمالي السعر</th>
                             <th scope="col">تاريخ الإنشاء</th>
                             <th scope="col">حركات </th>
                         </tr>
@@ -69,6 +71,7 @@ if (isset($_SESSION['username'])) {
                                 echo "<td>" . $row['quantity'] . "</td>";
                                 echo "<td>" . $row['product_price'] . "</td>";
                                 echo "<td>" . $row['type'] . "</td>";
+                                echo "<td>" . $row['quantity'] * $row['product_price'] . "</td>";
                                 echo "<td>" . $row['created_at'] . "</td>";
                         ?>
                                 <td>
