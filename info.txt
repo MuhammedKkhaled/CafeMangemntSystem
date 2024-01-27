@@ -4,7 +4,7 @@ Sessions :
     $_SESSION['is_admin'] 
     $_SESSION['username'] 
     $_SESSION['user_id']
-    $_SESSION['message_error']
+    $_SESSION['error_message']
 
 
    <?php if (mysqli_num_rows($result) > 0) { ?>

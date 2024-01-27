@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
     $userId = $_SESSION["user_id"];
 
     /// get the orders where the session has end_time = '0000-00-00 00:00:00' and it's registered by the logged-in user
-    $query = "SELECT po.id ,  po.playstation_session_id , po.order_price  FROM `playstation_orders` po
+    $query = "SELECT po.id ,  po.playstation_session_id , po.order_price , ps.start_time  FROM `playstation_orders` po
                JOIN `playstation_session` ps ON po.playstation_session_id = ps.id
               WHERE ps.end_time = '0000-00-00 00:00:00' AND po.user_id = $userId";
 

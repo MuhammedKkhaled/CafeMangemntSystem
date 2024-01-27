@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jan 27, 2024 at 12:13 AM
+-- Generation Time: Jan 28, 2024 at 12:41 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -41,7 +41,9 @@ CREATE TABLE `cafe_orders` (
 
 INSERT INTO `cafe_orders` (`id`, `total_price`, `user_id`, `created_at`, `updated_at`) VALUES
 (51, 200, 2, '2024-01-23 01:43:34', '2024-01-23 01:43:34'),
-(54, 206, 2, '2024-01-23 23:55:03', '2024-01-23 23:55:03');
+(54, 206, 2, '2024-01-23 23:55:03', '2024-01-23 23:55:03'),
+(55, 161, 3, '2024-01-26 23:46:07', '2024-01-26 23:46:07'),
+(56, 35, 3, '2024-01-27 17:51:11', '2024-01-27 17:51:11');
 
 -- --------------------------------------------------------
 
@@ -108,7 +110,9 @@ INSERT INTO `cafe_products_orders` (`id`, `cafe_product_id`, `food_product_id`, 
 (89, 2, NULL, 54, 1, 7, 7, '2024-01-24 00:27:57', '2024-01-24 00:27:57'),
 (90, 2, NULL, 54, 1, 7, 7, '2024-01-24 00:29:26', '2024-01-24 00:29:26'),
 (91, 1, NULL, 54, 1, 12, 12, '2024-01-24 01:38:51', '2024-01-24 01:38:51'),
-(92, NULL, 9, 54, 1, 90, 90, '2024-01-24 02:20:58', '2024-01-24 02:20:58');
+(92, NULL, 9, 54, 1, 90, 90, '2024-01-24 02:20:58', '2024-01-24 02:20:58'),
+(93, 3, NULL, 55, 23, 7, 161, '2024-01-26 23:46:07', '2024-01-26 23:46:07'),
+(94, 12, NULL, 56, 5, 7, 35, '2024-01-27 17:51:11', '2024-01-27 17:51:11');
 
 -- --------------------------------------------------------
 
@@ -218,7 +222,9 @@ CREATE TABLE `playstation_configuration` (
 
 INSERT INTO `playstation_configuration` (`id`, `playstation_type`, `controllers_type`, `price_per_hour`) VALUES
 (1, 'ps4', 'single', 20),
-(2, 'ps4', 'multi', 30);
+(2, 'ps4', 'multi', 30),
+(3, 'ps5', 'single', 40),
+(4, 'ps5', 'multi', 50);
 
 -- --------------------------------------------------------
 
@@ -250,7 +256,11 @@ INSERT INTO `playstation_orders` (`id`, `playstation_session_id`, `order_price`,
 (12, 21, 484, 2, '2024-01-23 13:53:44', '2024-01-23 13:53:44'),
 (13, 22, 153, 2, '2024-01-24 00:30:01', '2024-01-24 00:30:01'),
 (14, 23, 264, 2, '2024-01-24 01:24:12', '2024-01-24 01:24:12'),
-(15, 24, 318, 2, '2024-01-26 02:09:57', '2024-01-26 02:09:57');
+(15, 24, 318, 2, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
+(16, 25, 130, 2, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
+(17, 26, 0, 2, '2024-01-27 23:37:03', '2024-01-27 23:37:03'),
+(18, 27, 0, 2, '2024-01-27 23:37:08', '2024-01-27 23:37:08'),
+(19, 28, 0, 2, '2024-01-27 23:37:15', '2024-01-27 23:37:15');
 
 -- --------------------------------------------------------
 
@@ -306,7 +316,9 @@ INSERT INTO `playstation_product_order` (`id`, `playstation_session_id`, `cafe_p
 (34, 23, 8, NULL, 1, 30, 30, '2024-01-24 01:24:30', '2024-01-24 01:24:30'),
 (35, 23, 1, NULL, 1, 12, 12, '2024-01-24 01:25:32', '2024-01-24 01:25:32'),
 (36, 24, 1, NULL, 1, 12, 12, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
-(37, 24, NULL, 3, 1, 60, 60, '2024-01-26 02:09:57', '2024-01-26 02:09:57');
+(37, 24, NULL, 3, 1, 60, 60, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
+(38, 25, 10, NULL, 1, 20, 20, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
+(39, 25, NULL, 10, 1, 110, 110, '2024-01-27 23:35:15', '2024-01-27 23:35:15');
 
 -- --------------------------------------------------------
 
@@ -340,7 +352,11 @@ INSERT INTO `playstation_session` (`id`, `start_time`, `end_time`, `controllers_
 (21, '2024-01-23 15:53:44', '2024-01-24 02:07:43', 'multi', 'ps4', 30, '307'),
 (22, '2024-01-24 02:30:01', '2024-01-24 03:22:46', 'single', 'ps4', 20, '17'),
 (23, '2024-01-24 03:24:12', '2024-01-24 03:25:38', 'multi', 'ps4', 30, '1'),
-(24, '2024-01-26 04:09:57', '2024-01-26 16:28:17', 'single', 'ps4', 20, '246');
+(24, '2024-01-26 04:09:57', '2024-01-26 16:28:17', 'single', 'ps4', 20, '246'),
+(25, '2024-01-28 01:35:15', '2024-01-28 01:36:20', 'single', 'ps4', 20, '0'),
+(26, '2024-01-28 01:37:03', '0000-00-00 00:00:00', 'single', 'ps4', 20, '0'),
+(27, '2024-01-28 01:37:08', '0000-00-00 00:00:00', 'multi', 'ps5', 50, '0'),
+(28, '2024-01-28 01:37:15', '0000-00-00 00:00:00', 'multi', 'ps4', 30, '0');
 
 -- --------------------------------------------------------
 
@@ -414,9 +430,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_admin`, `created_at`) VALUES
-(1, 'Karem_emad', 'karkar@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, '2024-01-03 16:32:30'),
 (2, 'mohamed', 'mohamed@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, '2024-01-04 00:28:38'),
-(3, 'adminadmin', '', 'e10adc3949ba59abbe56e057f20f883e', 1, '2024-01-26 14:37:11');
+(3, 'adminadmin', '', 'e10adc3949ba59abbe56e057f20f883e', 1, '2024-01-26 14:37:11'),
+(5, 'ابو فلة القلة زعبولا', 'karamila@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, '2024-01-27 02:08:27');
 
 --
 -- Indexes for dumped tables
@@ -509,25 +525,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cafe_orders`
 --
 ALTER TABLE `cafe_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `cafe_products`
 --
 ALTER TABLE `cafe_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cafe_products_orders`
 --
 ALTER TABLE `cafe_products_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `foodcar_products`
 --
 ALTER TABLE `foodcar_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `food_orders`
@@ -545,25 +561,25 @@ ALTER TABLE `food_products_order`
 -- AUTO_INCREMENT for table `playstation_configuration`
 --
 ALTER TABLE `playstation_configuration`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `playstation_orders`
 --
 ALTER TABLE `playstation_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `playstation_product_order`
 --
 ALTER TABLE `playstation_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `playstation_session`
 --
 ALTER TABLE `playstation_session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `stocks`
@@ -581,7 +597,7 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
