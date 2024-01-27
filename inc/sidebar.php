@@ -96,8 +96,8 @@
              <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                  <div class="bg-white py-2 collapse-inner rounded">
                      <!-- <h6 class="collapse-header">اخري</h6> -->
-                     <a class="collapse-item" href="cafe.php">كافيه / بار</a>
-                     <a class="collapse-item" href="foodcar.php"> العربية </a>
+                     <a class="collapse-item" href="cafe.php">تيك اوي </a>
+                     <a class="collapse-item" href="foodcar.php"> في المحل </a>
                      <a class="collapse-item" href="playstaion.php">بلاستيشن </a>
                      <!-- <div class="collapse-divider"></div>
                      <h6 class="collapse-header">صفحات اخري</h6>
@@ -123,8 +123,8 @@
              <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                  <div class="bg-white py-2 collapse-inner rounded">
                      <!-- <h6 class="collapse-header">اخري</h6> -->
-                     <a class="collapse-item" href="cafe.php">كافيه / بار</a>
-                     <a class="collapse-item" href="foodcar.php"> العربية </a>
+                     <a class="collapse-item" href="cafe.php">تيك اوي </a>
+                     <a class="collapse-item" href="foodcar.php"> في المحل</a>
                      <a class="collapse-item" href="playstaion.php">بلاستيشن </a>
                      <div class="collapse-divider"></div>
                      <h6 class="collapse-header">صفحات اخري</h6>
