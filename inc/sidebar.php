@@ -16,11 +16,6 @@
         if ($_SESSION['is_admin']) :
         ?>
          <li class="nav-item active">
-             <a class="nav-link" href="#">
-                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                 <span>لوحة التحكم </span></a>
-         </li>
-         <li class="nav-item active">
              <a class="nav-link" href="UserDashboard.php">
                  <i class="fas fa-fw fa-bars"></i>
                  <span>الاصناف</span></a>
