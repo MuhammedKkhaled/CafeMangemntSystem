@@ -3,19 +3,23 @@ session_start();
 
 // Database Configuration Included
 require_once("../DB/db_config.php");
+require_once("../functions/dd.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // dd($_POST);
 
     $user_id = $_SESSION['user_id'];
 
 
     /// Validate (Required Data)
 
-    if (!empty($_POST['playstationproduct']) && !empty($_POST['playstationControllerType'])) {
+    if (!empty($_POST['playstationproduct']) && !empty($_POST['playstationControllerType']) && !empty($_POST['room'])) {
         // Main product data
         $mainPlaystationProduct = $_POST["playstationproduct"];
         $mainControllerType = $_POST["playstationControllerType"];
-
+        /// For room selection 
+        $room_id = $_POST['room'];
         /// Get the base price for those confgurations
         $selectQuery = "SELECT price_per_hour FROM `playstation_configuration` WHERE `playstation_type` ='$mainPlaystationProduct' AND `controllers_type` = '$mainControllerType' ";
         $result = mysqli_query($conn, $selectQuery);
@@ -23,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $base_price = $row['price_per_hour'];
     } else {
         // Empty data have been sent 
-        $_SESSION['error_message'] = "لا تنسي اختيار نوع الجهاز وعدد اللاعبين ";
+        $_SESSION['error_message'] = "لا تنسي اختيار نوع الجهاز وعدد اللاعبين والغرفة ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();
@@ -49,14 +53,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_begin_transaction($conn);
 
         /// Insert in playstation_session to start the session and get the last inserted id   
-        $insertQuery = "INSERT into `playstation_session` (`start_time` , `controllers_type` ,`playstation_type` , `base_price_for_this_confgurations`) 
-                                                        VALUES(NOW() , ? , ? , ?)
+        $insertQuery = "INSERT into `playstation_session` (`start_time` , `controllers_type` ,`playstation_type` , `base_price_for_this_confgurations` , `room_id`) 
+                                                        VALUES(NOW() , ? , ? , ? , ?)
         ";
         $stmtOrder = mysqli_prepare($conn, $insertQuery);
-        mysqli_stmt_bind_param($stmtOrder, 'ssi',  $mainControllerType, $mainPlaystationProduct, $base_price);
+        mysqli_stmt_bind_param($stmtOrder, 'ssii',  $mainControllerType, $mainPlaystationProduct, $base_price, $room_id);
         mysqli_stmt_execute($stmtOrder);
         $lastInsertedSessionId = mysqli_insert_id($conn);
 
+
+        //// Update the Table is_available column 
+        $query = "UPDATE rooms SET `is_available` = 0 WHERE `id` = ?";
+        $stmtUpdate = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmtUpdate, "i", $room_id);
+        mysqli_stmt_execute($stmtUpdate);
         // Insert data into cafe_products_orders table cafe products 
 
         if (!empty($additionalProductsForCafe)) {
@@ -91,17 +101,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
             $totalOrderPrice = calculateTotalOrderPriceForSession($lastInsertedSessionId);
-           
+
             // Insert a new record into playstation_orders table with the total order price
-            $insertOrderQuery = "INSERT INTO `playstation_orders` (`playstation_session_id`, `order_price` , `user_id` ) VALUES (?, ?, ?)";
+            $insertOrderQuery = "INSERT INTO `playstation_orders` (`playstation_session_id`, `order_price` , `user_id` , `room_id`) VALUES (?, ?, ? ,?)";
             $stmtInsertOrder = mysqli_prepare($conn, $insertOrderQuery);
-            mysqli_stmt_bind_param($stmtInsertOrder, 'idi', $lastInsertedSessionId, $totalOrderPrice, $user_id);
+            mysqli_stmt_bind_param($stmtInsertOrder, 'idii', $lastInsertedSessionId, $totalOrderPrice, $user_id, $room_id);
             mysqli_stmt_execute($stmtInsertOrder);
         } elseif (empty($additionalProductsForFood) && empty($additionalProductsForCafe)) {
 
-            $insertOrderQuery = "INSERT INTO `playstation_orders` (`playstation_session_id`, `user_id` ,`order_price`  ) VALUES (? , ?, 0)";
+            $insertOrderQuery = "INSERT INTO `playstation_orders` (`playstation_session_id`, `user_id` ,`order_price`, `room_id`) VALUES (? , ?, 0 ,?)";
             $stmtInsertOrder = mysqli_prepare($conn, $insertOrderQuery);
-            mysqli_stmt_bind_param($stmtInsertOrder, 'ii', $lastInsertedSessionId, $user_id);
+            mysqli_stmt_bind_param($stmtInsertOrder, 'iii', $lastInsertedSessionId, $user_id, $room_id);
             mysqli_stmt_execute($stmtInsertOrder);
         }
 
@@ -116,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_rollback($conn);
         echo "Error: " . $e->getMessage();
     } finally {
-            mysqli_close($conn);
+        mysqli_close($conn);
     }
 } else {
     header("Location: ../index.php");

@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
     $userId = $_SESSION["user_id"];
 
     /// get the orders where the session has end_time = '0000-00-00 00:00:00' and it's registered by the logged-in user
-    $query = "SELECT po.id ,  po.playstation_session_id , po.order_price , ps.start_time  FROM `playstation_orders` po
+    $query = "SELECT po.id ,  po.playstation_session_id , po.order_price , po.room_id AS 'Room Number' FROM `playstation_orders` po
                JOIN `playstation_session` ps ON po.playstation_session_id = ps.id
               WHERE ps.end_time = '0000-00-00 00:00:00' AND po.user_id = $userId";
 
@@ -45,6 +45,7 @@ if (isset($_SESSION['username'])) {
                             <th scope="col">رقم الاوردر</th>
                             <th scope="col">سعر الاوردر</th>
                             <th scope="col">كود الاوردر</th>
+                            <th scope="col">رقم الغرفة</th>
                             <th scope="col">حركات</th>
                         </tr>
                     </thead>
@@ -56,6 +57,9 @@ if (isset($_SESSION['username'])) {
                                 <td><?= $rows['order_price'] ?></td>
                                 <td>
                                     <?= $rows['id'] ?>
+                                </td>
+                                <td>
+                                    <?= $rows['Room Number'] ?>
                                 </td>
                                 <td>
                                     <a href="playstation_order_details.php?session_id=<?= $rows['playstation_session_id'] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-danger"> تفصايل الطلب </a>

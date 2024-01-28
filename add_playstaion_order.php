@@ -94,15 +94,11 @@ if (isset($_SESSION['username'])) {
                     <form id="addOrderForm" method="post" action="Pages/insert_playstation_order.php">
                         <div class="form-group">
                             <label for="">نوع الجهاز</label>
-                            <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
-                            <!-- <select class="form-control" id="productSelect" name="product">
-                                <option value="0">برجاء اختيار المنتج</option>
-                            </select> -->
+
                             <div class="">
                                 <label for="ps4">PS4</label>
                                 <input type="radio" name="playstationproduct" id="ps4" value="ps4">
                             </div>
-                            <!-- <label for="ps5"> PS5</label> -->
                             <div class="">
                                 <label for="ps5">PS5</label>
                                 <input type="radio" name="playstationproduct" id="ps5" value="ps5">
@@ -111,10 +107,6 @@ if (isset($_SESSION['username'])) {
                         </div>
                         <div class="form-group">
                             <label for="">سنجل ولا مالتي </label>
-                            <!-- <input type="text" name="productName" id="" class="form-control" autocomplete="off"> -->
-                            <!-- <select class="form-control" id="productSelect" name="product">
-                                <option value="0">برجاء اختيار المنتج</option>
-                            </select> -->
                             <div class="">
                                 <label for="single">سنجل </label>
                                 <input type="radio" name="playstationControllerType" id="single" value="single">
@@ -126,10 +118,12 @@ if (isset($_SESSION['username'])) {
                             </div>
 
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="quantityInput">الكمية</label>
-                            <input type="number" class="form-control" id="quantityInput" name="quantity" required min="1" value="1">
-                        </div> -->
+                        <div class="form-group">
+                            <label for="tableSelect"> اختر الغرفة </label>
+                            <select class="form-control" id="tableSelect" name="room">
+                                <option value="0">برجاء اختيار الغرفة</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <div id="additionalProductFieldsContainer"></div>
                         </div>
@@ -150,6 +144,33 @@ if (isset($_SESSION['username'])) {
 
 
         <script>
+            fetch('pages/get_rooms_data.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error!  Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var tableSelect = document.getElementById('tableSelect');
+
+                    tableSelect.innerHTML = "";
+                    // // Add Default option
+                    var defaultOption = document.createElement('option');
+                    defaultOption.value = "";
+                    defaultOption.text = "برجاء اختيار الغرفة ";
+                    tableSelect.appendChild(defaultOption);
+
+                    data.forEach(table => {
+                        if (table.is_available == 1) {
+                            var optionElement = document.createElement('option');
+                            optionElement.value = table.id;
+                            optionElement.text = table.room_name;
+                            tableSelect.appendChild(optionElement);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching table data:', error));
             // Example JavaScript code for handling form submission
             document.getElementById('addclick').addEventListener('click', function(event) {
                 // event.preventDefault();
