@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3308
--- Generation Time: Jan 28, 2024 at 12:41 AM
+-- Generation Time: Jan 28, 2024 at 06:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -169,7 +169,8 @@ INSERT INTO `food_orders` (`id`, `user_id`, `total_price`, `table_id`, `created_
 (9, 2, 50, 1, '2024-01-24 08:23:31', '2024-01-24 08:23:31', NULL),
 (10, 2, 62, 4, '2024-01-24 08:24:17', '2024-01-24 08:24:17', NULL),
 (11, 2, 180, NULL, '2024-01-24 08:35:19', '2024-01-24 08:35:19', '2024-01-26 04:17:19'),
-(13, 2, 200, NULL, '2024-01-25 15:18:46', '2024-01-25 15:18:46', '2024-01-26 02:57:55');
+(13, 2, 200, NULL, '2024-01-25 15:18:46', '2024-01-25 15:18:46', '2024-01-26 02:57:55'),
+(14, 3, 50, 3, '2024-01-28 16:31:38', '2024-01-28 16:31:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -201,7 +202,8 @@ INSERT INTO `food_products_order` (`id`, `food_product_id`, `cafe_product_id`, `
 (18, 3, NULL, 11, 2, 60, 120, '2024-01-24 08:35:19', '2024-01-24 08:35:19'),
 (19, NULL, 9, 13, 1, 20, 20, '2024-01-25 15:18:46', '2024-01-25 15:18:46'),
 (20, 2, NULL, 13, 3, 55, 165, '2024-01-25 15:18:46', '2024-01-25 15:18:46'),
-(24, NULL, 8, 11, 1, 30, 30, '2024-01-26 04:17:06', '2024-01-26 04:17:06');
+(24, NULL, 8, 11, 1, 30, 30, '2024-01-26 04:17:06', '2024-01-26 04:17:06'),
+(25, 1, NULL, 14, 1, 50, 50, '2024-01-28 16:31:38', '2024-01-28 16:31:38');
 
 -- --------------------------------------------------------
 
@@ -223,7 +225,7 @@ CREATE TABLE `playstation_configuration` (
 INSERT INTO `playstation_configuration` (`id`, `playstation_type`, `controllers_type`, `price_per_hour`) VALUES
 (1, 'ps4', 'single', 20),
 (2, 'ps4', 'multi', 30),
-(3, 'ps5', 'single', 40),
+(3, 'ps5', 'single', 45),
 (4, 'ps5', 'multi', 50);
 
 -- --------------------------------------------------------
@@ -235,6 +237,7 @@ INSERT INTO `playstation_configuration` (`id`, `playstation_type`, `controllers_
 CREATE TABLE `playstation_orders` (
   `id` int(11) NOT NULL,
   `playstation_session_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
   `order_price` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -245,22 +248,26 @@ CREATE TABLE `playstation_orders` (
 -- Dumping data for table `playstation_orders`
 --
 
-INSERT INTO `playstation_orders` (`id`, `playstation_session_id`, `order_price`, `user_id`, `created_at`, `updated_at`) VALUES
-(5, 12, 976, 2, '2024-01-19 15:05:00', '2024-01-19 15:05:00'),
-(6, 14, 781, 2, '2024-01-19 15:08:45', '2024-01-19 15:08:45'),
-(7, 15, 532, 2, '2024-01-19 23:31:15', '2024-01-19 23:31:15'),
-(8, 16, 627, 2, '2024-01-19 23:32:05', '2024-01-19 23:32:05'),
-(9, 17, 419, 2, '2024-01-20 12:59:50', '2024-01-20 12:59:50'),
-(10, 19, 33, 2, '2024-01-20 22:25:07', '2024-01-20 22:25:07'),
-(11, 20, 67, 2, '2024-01-22 08:17:25', '2024-01-22 08:17:25'),
-(12, 21, 484, 2, '2024-01-23 13:53:44', '2024-01-23 13:53:44'),
-(13, 22, 153, 2, '2024-01-24 00:30:01', '2024-01-24 00:30:01'),
-(14, 23, 264, 2, '2024-01-24 01:24:12', '2024-01-24 01:24:12'),
-(15, 24, 318, 2, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
-(16, 25, 130, 2, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
-(17, 26, 0, 2, '2024-01-27 23:37:03', '2024-01-27 23:37:03'),
-(18, 27, 0, 2, '2024-01-27 23:37:08', '2024-01-27 23:37:08'),
-(19, 28, 0, 2, '2024-01-27 23:37:15', '2024-01-27 23:37:15');
+INSERT INTO `playstation_orders` (`id`, `playstation_session_id`, `room_id`, `order_price`, `user_id`, `created_at`, `updated_at`) VALUES
+(5, 12, 0, 976, 2, '2024-01-19 15:05:00', '2024-01-19 15:05:00'),
+(6, 14, 0, 781, 2, '2024-01-19 15:08:45', '2024-01-19 15:08:45'),
+(7, 15, 0, 532, 2, '2024-01-19 23:31:15', '2024-01-19 23:31:15'),
+(8, 16, 0, 627, 2, '2024-01-19 23:32:05', '2024-01-19 23:32:05'),
+(9, 17, 0, 419, 2, '2024-01-20 12:59:50', '2024-01-20 12:59:50'),
+(10, 19, 0, 33, 2, '2024-01-20 22:25:07', '2024-01-20 22:25:07'),
+(11, 20, 0, 67, 2, '2024-01-22 08:17:25', '2024-01-22 08:17:25'),
+(12, 21, 0, 484, 2, '2024-01-23 13:53:44', '2024-01-23 13:53:44'),
+(13, 22, 0, 153, 2, '2024-01-24 00:30:01', '2024-01-24 00:30:01'),
+(14, 23, 0, 264, 2, '2024-01-24 01:24:12', '2024-01-24 01:24:12'),
+(15, 24, 0, 318, 2, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
+(16, 25, 0, 130, 2, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
+(17, 26, 0, 0, 2, '2024-01-27 23:37:03', '2024-01-27 23:37:03'),
+(18, 27, 0, 0, 2, '2024-01-27 23:37:08', '2024-01-27 23:37:08'),
+(19, 28, 0, 0, 2, '2024-01-27 23:37:15', '2024-01-27 23:37:15'),
+(20, 29, 1, 0, 2, '2024-01-28 00:55:10', '2024-01-28 00:55:10'),
+(21, 30, 3, 0, 2, '2024-01-28 00:59:31', '2024-01-28 00:59:31'),
+(22, 31, 4, 39, 3, '2024-01-28 16:34:30', '2024-01-28 16:34:30'),
+(23, 32, 2, 110, 3, '2024-01-28 16:50:34', '2024-01-28 16:50:34');
 
 -- --------------------------------------------------------
 
@@ -318,7 +325,9 @@ INSERT INTO `playstation_product_order` (`id`, `playstation_session_id`, `cafe_p
 (36, 24, 1, NULL, 1, 12, 12, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
 (37, 24, NULL, 3, 1, 60, 60, '2024-01-26 02:09:57', '2024-01-26 02:09:57'),
 (38, 25, 10, NULL, 1, 20, 20, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
-(39, 25, NULL, 10, 1, 110, 110, '2024-01-27 23:35:15', '2024-01-27 23:35:15');
+(39, 25, NULL, 10, 1, 110, 110, '2024-01-27 23:35:15', '2024-01-27 23:35:15'),
+(40, 31, 1, NULL, 3, 12, 36, '2024-01-28 16:34:30', '2024-01-28 16:34:30'),
+(41, 32, NULL, 10, 1, 110, 110, '2024-01-28 16:50:34', '2024-01-28 16:50:34');
 
 -- --------------------------------------------------------
 
@@ -328,6 +337,7 @@ INSERT INTO `playstation_product_order` (`id`, `playstation_session_id`, `cafe_p
 
 CREATE TABLE `playstation_session` (
   `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
   `start_time` datetime NOT NULL DEFAULT current_timestamp(),
   `end_time` datetime NOT NULL,
   `controllers_type` varchar(50) NOT NULL,
@@ -340,23 +350,53 @@ CREATE TABLE `playstation_session` (
 -- Dumping data for table `playstation_session`
 --
 
-INSERT INTO `playstation_session` (`id`, `start_time`, `end_time`, `controllers_type`, `playstation_type`, `base_price_for_this_confgurations`, `total_price`) VALUES
-(12, '2024-01-19 17:05:00', '2024-01-20 23:06:25', 'multi', 'ps4', 30, '901'),
-(14, '2024-01-19 17:08:44', '2024-01-21 00:12:39', 'single', 'ps4', 20, '621'),
-(15, '2024-01-20 01:31:15', '2024-01-21 00:52:52', 'single', 'ps4', 20, '467'),
-(16, '2024-01-20 01:32:05', '2024-01-21 00:24:08', 'single', 'ps4', 20, '457'),
-(17, '2024-01-20 14:59:50', '2024-01-21 00:13:31', 'single', 'ps4', 20, '184'),
-(18, '2024-01-20 22:53:19', '2024-01-21 00:53:00', 'single', 'ps4', 20, '0'),
-(19, '2024-01-21 00:25:07', '2024-01-21 01:31:08', 'multi', 'ps4', 30, '33'),
-(20, '2024-01-22 10:17:25', '2024-01-22 12:34:27', 'single', 'ps4', 20, '46'),
-(21, '2024-01-23 15:53:44', '2024-01-24 02:07:43', 'multi', 'ps4', 30, '307'),
-(22, '2024-01-24 02:30:01', '2024-01-24 03:22:46', 'single', 'ps4', 20, '17'),
-(23, '2024-01-24 03:24:12', '2024-01-24 03:25:38', 'multi', 'ps4', 30, '1'),
-(24, '2024-01-26 04:09:57', '2024-01-26 16:28:17', 'single', 'ps4', 20, '246'),
-(25, '2024-01-28 01:35:15', '2024-01-28 01:36:20', 'single', 'ps4', 20, '0'),
-(26, '2024-01-28 01:37:03', '0000-00-00 00:00:00', 'single', 'ps4', 20, '0'),
-(27, '2024-01-28 01:37:08', '0000-00-00 00:00:00', 'multi', 'ps5', 50, '0'),
-(28, '2024-01-28 01:37:15', '0000-00-00 00:00:00', 'multi', 'ps4', 30, '0');
+INSERT INTO `playstation_session` (`id`, `room_id`, `start_time`, `end_time`, `controllers_type`, `playstation_type`, `base_price_for_this_confgurations`, `total_price`) VALUES
+(12, 0, '2024-01-19 17:05:00', '2024-01-20 23:06:25', 'multi', 'ps4', 30, '901'),
+(14, 0, '2024-01-19 17:08:44', '2024-01-21 00:12:39', 'single', 'ps4', 20, '621'),
+(15, 0, '2024-01-20 01:31:15', '2024-01-21 00:52:52', 'single', 'ps4', 20, '467'),
+(16, 0, '2024-01-20 01:32:05', '2024-01-21 00:24:08', 'single', 'ps4', 20, '457'),
+(17, 0, '2024-01-20 14:59:50', '2024-01-21 00:13:31', 'single', 'ps4', 20, '184'),
+(18, 0, '2024-01-20 22:53:19', '2024-01-21 00:53:00', 'single', 'ps4', 20, '0'),
+(19, 0, '2024-01-21 00:25:07', '2024-01-21 01:31:08', 'multi', 'ps4', 30, '33'),
+(20, 0, '2024-01-22 10:17:25', '2024-01-22 12:34:27', 'single', 'ps4', 20, '46'),
+(21, 0, '2024-01-23 15:53:44', '2024-01-24 02:07:43', 'multi', 'ps4', 30, '307'),
+(22, 0, '2024-01-24 02:30:01', '2024-01-24 03:22:46', 'single', 'ps4', 20, '17'),
+(23, 0, '2024-01-24 03:24:12', '2024-01-24 03:25:38', 'multi', 'ps4', 30, '1'),
+(24, 0, '2024-01-26 04:09:57', '2024-01-26 16:28:17', 'single', 'ps4', 20, '246'),
+(25, 0, '2024-01-28 01:35:15', '2024-01-28 01:36:20', 'single', 'ps4', 20, '0'),
+(26, 0, '2024-01-28 01:37:03', '0000-00-00 00:00:00', 'single', 'ps4', 20, '0'),
+(27, 0, '2024-01-28 01:37:08', '0000-00-00 00:00:00', 'multi', 'ps5', 50, '0'),
+(28, 0, '2024-01-28 01:37:15', '0000-00-00 00:00:00', 'multi', 'ps4', 30, '0'),
+(29, 1, '2024-01-28 02:55:10', '0000-00-00 00:00:00', 'multi', 'ps4', 30, '0'),
+(30, 3, '2024-01-28 02:59:31', '0000-00-00 00:00:00', 'single', 'ps4', 20, '0'),
+(31, 4, '2024-01-28 18:34:30', '2024-01-28 18:42:33', 'single', 'ps4', 20, '3'),
+(32, 2, '2024-01-28 18:50:34', '2024-01-28 18:50:53', 'multi', 'ps5', 50, '0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `id` int(11) NOT NULL,
+  `room_name` varchar(191) NOT NULL,
+  `room_number` int(11) NOT NULL,
+  `is_available` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `room_name`, `room_number`, `is_available`, `created_at`) VALUES
+(1, 'room 1', 1, 0, '2024-01-28 00:34:52'),
+(2, 'room 2', 2, 1, '2024-01-28 00:34:52'),
+(3, 'room 3', 3, 0, '2024-01-28 00:34:52'),
+(4, 'room 4', 4, 1, '2024-01-28 00:37:57'),
+(5, 'room 5', 5, 1, '2024-01-28 00:37:57'),
+(6, 'room 6', 6, 1, '2024-01-28 00:37:57');
 
 -- --------------------------------------------------------
 
@@ -403,7 +443,7 @@ CREATE TABLE `tables` (
 INSERT INTO `tables` (`id`, `capacity`, `table_number`, `is_available`, `created_at`, `updated_at`) VALUES
 (1, 4, 1, 0, '2024-01-24 02:36:19', '2024-01-24 02:36:19'),
 (2, 4, 2, 1, '2024-01-24 02:36:19', '2024-01-24 02:36:19'),
-(3, 2, 3, 1, '2024-01-24 02:36:19', '2024-01-24 02:36:19'),
+(3, 2, 3, 0, '2024-01-24 02:36:19', '2024-01-24 02:36:19'),
 (4, 3, 4, 0, '2024-01-24 02:36:19', '2024-01-24 02:36:19'),
 (5, 4, 5, 1, '2024-01-25 15:28:40', '2024-01-25 15:28:40'),
 (6, 2, 6, 1, '2024-01-25 15:28:40', '2024-01-25 15:28:40'),
@@ -422,6 +462,7 @@ CREATE TABLE `users` (
   `email` varchar(191) NOT NULL,
   `password` varchar(191) NOT NULL,
   `is_admin` int(11) NOT NULL DEFAULT 0,
+  `is_active` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -429,10 +470,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_admin`, `created_at`) VALUES
-(2, 'mohamed', 'mohamed@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, '2024-01-04 00:28:38'),
-(3, 'adminadmin', '', 'e10adc3949ba59abbe56e057f20f883e', 1, '2024-01-26 14:37:11'),
-(5, 'ابو فلة القلة زعبولا', 'karamila@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, '2024-01-27 02:08:27');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `is_admin`, `is_active`, `created_at`) VALUES
+(3, 'adminadmin', '', 'e10adc3949ba59abbe56e057f20f883e', 1, 1, '2024-01-26 14:37:11'),
+(5, 'ابو فلة القلة زعبولا', 'karamila@hotmail.com', 'e10adc3949ba59abbe56e057f20f883e', 1, 0, '2024-01-27 02:08:27');
 
 --
 -- Indexes for dumped tables
@@ -499,6 +539,12 @@ ALTER TABLE `playstation_session`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stocks`
 --
 ALTER TABLE `stocks`
@@ -549,13 +595,13 @@ ALTER TABLE `foodcar_products`
 -- AUTO_INCREMENT for table `food_orders`
 --
 ALTER TABLE `food_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `food_products_order`
 --
 ALTER TABLE `food_products_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `playstation_configuration`
@@ -567,19 +613,25 @@ ALTER TABLE `playstation_configuration`
 -- AUTO_INCREMENT for table `playstation_orders`
 --
 ALTER TABLE `playstation_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `playstation_product_order`
 --
 ALTER TABLE `playstation_product_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `playstation_session`
 --
 ALTER TABLE `playstation_session`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `stocks`
