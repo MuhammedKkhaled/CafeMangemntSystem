@@ -20,8 +20,10 @@ if (isset($_SESSION['username'])) {
     $resultForNotEndedOrders = mysqli_query($conn, $query);
 
 
-    $endedordersForSession = "SELECT po.id ,  po.playstation_session_id , po.order_price  FROM `playstation_orders` po
+    $endedordersForSession = "SELECT po.id ,  po.playstation_session_id , po.order_price , rom.room_name  FROM `playstation_orders` po
                                 JOIN `playstation_session` ps ON po.playstation_session_id = ps.id
+                                JOIN `rooms` as rom 
+                                ON po.room_id = rom.id
                                WHERE ps.end_time <> '0000-00-00 00:00:00' AND po.user_id = $userId";
     $endedOrdersForSessionResult = mysqli_query($conn, $endedordersForSession);
 ?>
@@ -63,7 +65,7 @@ if (isset($_SESSION['username'])) {
                                 </td>
                                 <td>
                                     <a href="playstation_order_details.php?session_id=<?= $rows['playstation_session_id'] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-danger"> تفصايل الطلب </a>
-                                    <a href="edit_playstation_order.php?session_id=<?= $rows["playstation_session_id"] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-info">تعديل / حساب</a>
+                                    <a href="edit_playstation_order.php?session_id=<?= $rows["playstation_session_id"] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>&room_id=<?= $rows['Room Number'] ?>" class="btn btn-info">تعديل / حساب</a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -89,6 +91,7 @@ if (isset($_SESSION['username'])) {
                             <th scope="col">رقم الاوردر</th>
                             <th scope="col">سعر الاوردر</th>
                             <th scope="col">كود الاوردر</th>
+                            <th scope="col">اسم الغرفة</th>
                             <th scope="col">حركات</th>
                         </tr>
                     </thead>
@@ -100,6 +103,9 @@ if (isset($_SESSION['username'])) {
                                 <td><?= $rows['order_price'] ?></td>
                                 <td>
                                     <?= $rows['playstation_session_id'] ?>
+                                </td>
+                                <td>
+                                    <?= $rows['room_name'] ?>
                                 </td>
                                 <td>
                                     <a href="playstation_order_details.php?session_id=<?= $rows['playstation_session_id'] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-danger"> تفصايل الطلب </a>

@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
 
         <!-- Begin Cafe Content -->
         <a href="cafe.php" class="btn btn-primary btn-lg mb-2">
-            الكافيه
+            تيك اوي
         </a>
 
 
@@ -83,7 +83,7 @@ if (isset($_SESSION['username'])) {
 
         <!-- Begin Food Car Content  -->
         <a href="foodcar.php" class="btn btn-primary btn-lg mb-2">
-            العربية
+            ترابيزات
         </a>
         <div class="row">
             <?php

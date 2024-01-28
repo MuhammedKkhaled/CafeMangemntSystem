@@ -1,14 +1,14 @@
 <?php
 
 require_once("../DB/db_config.php");
+require_once("../functions/dd.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== "") {
-
 
     $orderId = isset($_GET['orderId']) ? intval($_GET['orderId']) : 0;
     $session_id = isset($_GET['session_id']) ? intval($_GET['session_id']) : 0;
     $old_price = isset($_GET['old_price']) ? intval($_GET['old_price']) : 0;
-
+    $room_id  = isset($_GET['room_id']) ? intval($_GET['room_id']) : 0;
 
     try {
         // Begin SQL Transaction
@@ -45,6 +45,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_SERVER['HTTP_REFERER']) && $
         $updatedTotalOrderPrice = $old_price + $calculatedTotalPrice;
         mysqli_stmt_bind_param($stmtUpdateOrderTotalPrice, 'di',  $updatedTotalOrderPrice, $orderId);
         mysqli_stmt_execute($stmtUpdateOrderTotalPrice);
+
+        //// Update the Table is_available column 
+        $query = "UPDATE rooms SET `is_available` = 1 WHERE `id` = ?";
+        $stmtUpdate = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmtUpdate, "i", $room_id);
+        mysqli_stmt_execute($stmtUpdate);
+
 
         // Commit the transaction
         mysqli_commit($conn);

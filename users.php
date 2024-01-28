@@ -94,7 +94,7 @@ if (isset($_SESSION['username'])) {
                                 echo "<td>" . $row['created_at'] . "</td>";
                                 ?>
                                 <td class="d-flex justify-content-between">
-                                    <a href="admin/stocks/deleteUser.php?user_id=<?= $row['id'] ?>" class="btn btn-danger mr-2 btn-sm"> مسح المستخدم من النظام</a>
+                                    <a href="admin/stocks/disableUser.php?user_id=<?= $row['id'] ?>" class="btn btn-danger mr-2 btn-sm"> ايقاف المستخدم </a>
                                     <a href="admin/stocks/makeUserAdmin.php?user_id=<?= $row['id'] ?>&is_admin=<?= $row['is_admin'] ?>" class="btn btn-success mr-2 btn-sm"> تحويل المستخدم لادمن</a>
                                     <a href="admin_edit_user_page.php?user_id=<?= $row['id'] ?>" class="btn btn-info btn-sm"> تعديل المستخدم</a>
                                 </td>

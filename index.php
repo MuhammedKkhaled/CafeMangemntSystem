@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = hash("md5", $_POST['password']);
 
     /// Get Data From 
-    $query = "SELECT * FROM `users` WHERE `username` = '$username'";
+    $query = "SELECT * FROM `users` WHERE `username` = '$username' AND `is_active` = 1";
     $result = mysqli_query($conn, $query);
 
     if ($result) {

@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])) {
     $orderId = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
     $session_id = isset($_GET['session_id']) ? intval($_GET['session_id']) : 0;
     $old_price = isset($_GET['old_price']) ? intval($_GET['old_price']) : 0;
-
+    $room_id = $_GET['room_id'];
 
     /// Query to get the session and display it 
     $sessionQuery = "SELECT * FROM `playstation_session` WHERE `id`=$session_id";
@@ -39,7 +39,7 @@ if (isset($_SESSION['username'])) {
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
-        <a href="pages/end_playstation_session.php?orderId=<?= $orderId ?>&session_id=<?= $session_id ?>&old_price=<?= $old_price ?>" class="btn btn-primary" id="endcalculations">
+        <a href="pages/end_playstation_session.php?orderId=<?= $orderId ?>&session_id=<?= $session_id ?>&old_price=<?= $old_price ?>&room_id=<?= $room_id ?>" class="btn btn-primary" id="endcalculations">
             تخليص الحساب
         </a>
 
