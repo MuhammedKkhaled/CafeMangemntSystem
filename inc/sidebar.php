@@ -133,7 +133,7 @@
      <?php } ?>
      <!-- Nav Item - Charts -->
      <li class="nav-item">
-         <a class="nav-link" href="#">
+         <a class="nav-link" href="reports.php">
              <i class="fas fa-fw fa-chart-area"></i>
              <span>البيانات والتقارير</span></a>
      </li>

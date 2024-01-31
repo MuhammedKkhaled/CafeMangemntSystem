@@ -11,6 +11,7 @@ if (isset($_SESSION['username'])) {
 
     /// get the currentdate and id for registered user 
     $currentDate = date("Y-m-d");
+    
     $userId = $_SESSION["user_id"];
 
     /// get the orders where it's created_date today and it's registered by the logged in user

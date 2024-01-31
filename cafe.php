@@ -30,11 +30,7 @@ if (isset($_SESSION['username'])) {
         <!-- Begin Cafe Content -->
 
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
-            <div class="col-md-4">
-                <a href="add_cafe_order.php" class="btn-lg mb-2 text-center btn btn-primary">
-                    اضافة طلب
-                </a>
-            </div>
+
             <div class="col-md-4 text-center">
                 <h1 class="h5 mb-0 text-gray-800">المنيو</h1>
             </div>
@@ -87,7 +83,11 @@ if (isset($_SESSION['username'])) {
         <!-- Content Row -->
     </div>
     <!-- /.container-fluid -->
-
+    <div class="col-md-4">
+        <a href="add_cafe_order.php" class="btn-lg mb-2 text-center btn btn-primary">
+            اضافة طلب
+        </a>
+    </div>
 
 
 
