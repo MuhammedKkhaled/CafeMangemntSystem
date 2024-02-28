@@ -23,16 +23,16 @@ if (isset($_SESSION['username'])) {
                         <h1 class="h3 mb-0 text-gray-900">اضافة المنتج </h1>
                     </div>
                     <?php
-                    if (isset($_SESSION['error_message'])) {
+                    if (isset($_SESSION['message']) || isset($_SESSION['message'])) {
                     ?>
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong> ياعم فوق بقا فوق </strong> <span class="alert-message"> <?= $_SESSION['error_message'] ?></span>
+                            <strong> ياعم فوق بقا فوق </strong> <span class="alert-message"> <?= $_SESSION['message'] ?></span>
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                     <?php }
-                    unset($_SESSION['error_message']);
+                    unset($_SESSION['message']);
                     ?>
                     <form method="post" action="admin/stocks/addCafeProduct.php">
                         <div class="mb-3">

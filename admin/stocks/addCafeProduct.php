@@ -12,13 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['username'])) {
     $created_at = date('Y-m-d h:i:s');
     $admin_id = $_SESSION['user_id'];
     if (empty($product_name)) {
-        $_SESSION['message_error'] = "لا يمكن ان يكون اسم المنتج فارغ ";
+        $_SESSION['message'] = "لا يمكن ان يكون اسم المنتج فارغ ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();
     }
     if (empty($product_price)) {
-        $_SESSION['message_error'] = "لا يمكن ان يكون سعر المنتج فارغ او يساوي الصفر ";
+        $_SESSION['message'] = "لا يمكن ان يكون سعر المنتج فارغ او يساوي الصفر ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();
@@ -28,12 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['username'])) {
     $insertQuery = "INSERT INTO cafe_products (product_name, product_price, admin_id, created_at) VALUES ('$product_name', '$product_price', '$admin_id', '$created_at')";
 
     if (mysqli_query($conn, $insertQuery)) {
-
+        $_SESSION['message'] = "يوجد خطا الان في البيانات برجاء الرجوع مرة اخري ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();
     } else {
-        $_SESSION['message_error'] = "يوجد خطا الان في البيانات برجاء الرجوع مرة اخري ";
+        $_SESSION['message'] = "يوجد خطا الان في البيانات برجاء الرجوع مرة اخري ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();

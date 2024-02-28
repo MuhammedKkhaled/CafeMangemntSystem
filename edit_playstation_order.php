@@ -39,9 +39,9 @@ if (isset($_SESSION['username'])) {
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
-        <a href="pages/end_playstation_session.php?orderId=<?= $orderId ?>&session_id=<?= $session_id ?>&old_price=<?= $old_price ?>&room_id=<?= $room_id ?>" class="btn btn-primary" id="endcalculations">
+        <!-- <a href="pages/end_playstation_session.php?orderId=<?= $orderId ?>&session_id=<?= $session_id ?>&old_price=<?= $old_price ?>&room_id=<?= $room_id ?>" class="btn btn-primary" id="endcalculations">
             تخليص الحساب
-        </a>
+        </a> -->
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-center mb-4">

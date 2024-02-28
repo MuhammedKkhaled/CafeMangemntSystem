@@ -24,10 +24,10 @@ if (isset($_SESSION['username'])) {
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
 
             <div class="col-md-4 text-center">
-                <h1 class="h5 mb-0 text-gray-800">الاسعار</h1>
+                <!-- <h1 class="h5 mb-0 text-gray-800">الاسعار</h1> -->
             </div>
             <div class="col-md-4 text-center">
-                <a href="all_playstation_order.php" class="btn-lg mb-2 text-center btn btn-info">
+                <a href="all_playstation_order.php" class="btn-lg mb-2 text-center btn btn-primary">
                     معرفة تفاصيل الاوردارات
                 </a>
             </div>
@@ -69,11 +69,11 @@ if (isset($_SESSION['username'])) {
 
         <!-- Content Row -->
     </div>
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <a href="add_playstaion_order.php" class="btn-lg mb-2 text-center btn btn-primary">
             اضافة طلب
         </a>
-    </div>
+    </div> -->
     <!-- /.container-fluid -->
 
 <?php

@@ -32,7 +32,6 @@ if (isset($_SESSION['username'])) {
         <div class="row d-sm-flex align-items-center justify-content-between mb-4">
 
             <div class="col-md-4 text-center">
-                <h1 class="h2 mb-0 text-gray-800">المنيو</h1>
             </div>
             <div class="col-md-4 text-center">
                 <a href="all_food_order.php" class="btn-lg mb-2 text-center btn btn-primary">
@@ -84,11 +83,7 @@ if (isset($_SESSION['username'])) {
     </div>
     <!-- /.container-fluid -->
 
-    <div class="col-md-4">
-        <a href="add_food_order.php" class="btn-lg mb-2 text-center btn btn-primary">
-            اضافة طلب
-        </a>
-    </div>
+    <!--  -->
 
 
 <?php

@@ -90,8 +90,8 @@ if (isset($_SESSION['username'])) {
                         <tr class="">
                             <td><?= $rows['playstation_type'] ?></td>
                             <td><?= $rows['controllers_type'] ?></td>
-                            <td><?= date('H:i:s', strtotime($rows['start_time'])) ?></td>
-                            <td><?= date('H:i:s', strtotime($rows['end_time'])) ?></td>
+                            <td><?= date('h:i:s a', strtotime($rows['start_time'])) ?></td>
+                            <td><?= date('h:i:s a', strtotime($rows['end_time'])) ?></td>
                             <td><?= $rows['base_price_for_this_confgurations'] ?></td>
                             <?php
                             // $totalOrderPrice += $rows['product_total_price'];

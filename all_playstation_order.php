@@ -65,7 +65,10 @@ if (isset($_SESSION['username'])) {
                                 </td>
                                 <td>
                                     <a href="playstation_order_details.php?session_id=<?= $rows['playstation_session_id'] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-danger"> تفصايل الطلب </a>
-                                    <a href="edit_playstation_order.php?session_id=<?= $rows["playstation_session_id"] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>&room_id=<?= $rows['Room Number'] ?>" class="btn btn-info">تعديل / حساب</a>
+                                    <a href="edit_playstation_order.php?session_id=<?= $rows["playstation_session_id"] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>&room_id=<?= $rows['Room Number'] ?>" class="btn btn-info">تعديل </a>
+                                    <a href="pages/end_playstation_session.php?orderId=<?= $rows['id'] ?>&session_id=<?= $rows["playstation_session_id"] ?>&old_price=<?= $rows['order_price'] ?>&room_id=<?= $rows['Room Number'] ?>" class="btn btn-primary" id="endcalculations">
+                                        تخليص الحساب
+                                    </a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -110,6 +113,7 @@ if (isset($_SESSION['username'])) {
                                 <td>
                                     <a href="playstation_order_details.php?session_id=<?= $rows['playstation_session_id'] ?>&order_id=<?= $rows['id'] ?>&old_price=<?= $rows['order_price'] ?>" class="btn btn-danger"> تفصايل الطلب </a>
                                     <a href="" class="btn btn-info">طباعة</a>
+
                                 </td>
                             </tr>
                         <?php } ?>

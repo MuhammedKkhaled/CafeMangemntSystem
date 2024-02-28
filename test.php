@@ -1,36 +1,57 @@
-document.addEventListener("DOMContentLoaded", function() {
-document.getElementById("date-range-button").addEventListener("click", fetchReportsByDateRange);
-
-function fetchReportsByDateRange() {
-const startDate = document.getElementById("start-date").value;
-const endDate = document.getElementById("end-date").value;
-
-fetchOrdersData("cafe_orders.php", startDate, endDate, "cafe-orders");
-fetchOrdersData("Playstation_orders.php", startDate, endDate, "playstation-orders");
-fetchOrdersData("foodCar_orders.php", startDate, endDate, "foodcar-orders");
+<?php
+// Function to download an image from a URL and save it to a specified location
+function downloadImage($imageUrl, $savePath) {
+    $imageContent = file_get_contents($imageUrl);
+    if ($imageContent !== false) {
+        file_put_contents($savePath, $imageContent);
+        echo "Image downloaded successfully: $savePath\n";
+    } else {
+        echo "Failed to download image: $imageUrl\n";
+    }
 }
 
-function fetchOrdersData(endpoint, startDate, endDate, elementId) {
-fetch(endpoint + "?start_date=" + startDate + "&end_date=" + endDate)
-.then(response => {
-if (!response.ok) {
-throw new Error("Network response was not ok");
-}
-return response.json();
-})
-.then(data => {
-// Update the corresponding tab content
-document.getElementById(elementId).innerHTML = `<h2>Orders Data</h2>` + displayOrdersData(data);
-})
-.catch(error => {
-console.error("Error fetching data:", error);
-document.getElementById(elementId).innerHTML = `<h2>Error</h2>
-<p>An error occurred while fetching data.</p>`;
-});
+// Function to get image URLs from a webpage
+function getImageUrls($url) {
+    $html = file_get_contents($url);
+    $dom = new DOMDocument();
+    @$dom->loadHTML($html);
+
+    $imageUrls = array();
+
+    // Find all img tags
+    $imgTags = $dom->getElementsByTagName('img');
+    foreach ($imgTags as $imgTag) {
+        $imageUrl = $imgTag->getAttribute('src');
+        // Convert relative URLs to absolute URLs
+        if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+            $imageUrl = rtrim($url, '/') . '/' . ltrim($imageUrl, '/');
+        }
+        $imageUrls[] = $imageUrl;
+    }
+
+    return $imageUrls;
 }
 
-function displayOrdersData(data) {
-// Format and display the orders data as per your requirements
-// You can use HTML markup to structure the data within the tab content
+// Main script
+if (isset($argv[1])) {
+    $url = $argv[1];
+
+    // Get image URLs from the webpage
+    $imageUrls = getImageUrls($url);
+
+    // Destination directory to store downloaded images
+    $destinationDirectory = getenv('HOME') . '/Desktop/';
+
+    // Download each image
+    foreach ($imageUrls as $imageUrl) {
+        // Extract filename from URL
+        $filename = basename($imageUrl);
+        // Set the save path
+        $savePath = $destinationDirectory . $filename;
+        // Download the image
+        downloadImage($imageUrl, $savePath);
+    }
+} else {
+    echo "Please provide a URL as argument.\n";
 }
-});
+?>

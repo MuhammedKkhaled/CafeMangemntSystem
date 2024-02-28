@@ -100,10 +100,10 @@ if (isset($_SESSION['username'])) {
                     </form>
                     <!-- Add more products button -->
 
-                    <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات آخرى للطلب </button>
+                    <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsBtn">إضافة منتجات آخرى من البار</button>
                     <button type="button" class="btn btn-secondary mt-3" id="addMoreProductsFood">إضافة منتجات من عربية الاكل </button>
                     <div class="form-group mt-3">
-                        <a href="cafe.php" class="btn btn-danger"> رجوع للخلف</a>
+                        <a href="UserDashboard.php" class="btn btn-danger"> رجوع للخلف</a>
                     </div>
 
                     <!-- Container to dynamically add more product fields -->

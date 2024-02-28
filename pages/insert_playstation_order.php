@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         // echo "Order added successfully!";
-        header("Location: ../playstaion.php");
+        header("Location: ../UserDashboard.php");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction in case of an error occuired

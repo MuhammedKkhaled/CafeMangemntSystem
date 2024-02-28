@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_commit($conn);
 
         // echo "Order added successfully!";
-        header("Location: ../foodcar.php");
+        header("Location: ../UserDashboard.php");
         exit();
     } catch (Exception $e) {
         // Rollback the transaction in case of an error occuired
