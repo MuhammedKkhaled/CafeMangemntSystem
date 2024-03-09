@@ -22,7 +22,7 @@ if (isset($_SESSION['username'])) {
                     <div class="col-md-6 offset-md-3">
                         <h1 class="h3 mb-4 text-gray-800">إضافة منتج للمخازن</h1>
                         <!-- Add Product to Stocks Form -->
-                        <form id="addProductForm" method="post" action="admin/stocks/updateProduct.php?product_id=<?= $product_id  ?>">
+                        <form id="addProductForm" method="post" action="admin/stocks/updateStockProduct.php?product_id=<?= $product_id  ?>">
                             <div class="form-group">
                                 <label for="product_name">اسم المنتج </label>
                                 <input type="text" class="form-control" id="product_name" name="product_name" required value="<?= $row['product_name']  ?>">

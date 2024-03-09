@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['username'])) {
     $insertQuery = "INSERT INTO cafe_products (product_name, product_price, admin_id, created_at) VALUES ('$product_name', '$product_price', '$admin_id', '$created_at')";
 
     if (mysqli_query($conn, $insertQuery)) {
-        $_SESSION['message'] = "يوجد خطا الان في البيانات برجاء الرجوع مرة اخري ";
+        $_SESSION['done'] = "تمام يامعلم شاطر ";
         $referrerPage = $_SERVER['HTTP_REFERER'];
         header("Location: $referrerPage");
         exit();

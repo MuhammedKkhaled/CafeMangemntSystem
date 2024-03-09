@@ -47,7 +47,7 @@ if (isset($_SESSION['username'])) {
 
             ?>
                     <div class="col-xl-3 col-md-6 mb-4">
-                        <a href="#">
+                        <a href="admin_edit_cafe_products.php?id=<?= $row['id'] ?>">
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">

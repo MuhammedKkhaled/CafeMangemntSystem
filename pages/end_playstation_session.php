@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_SERVER['HTTP_REFERER']) && $
         // Commit the transaction
         mysqli_commit($conn);
 
-        header("Location: ../all_playstation_order.php");
+        header("Location: ../playstation_order_details.php?session_id=" . $session_id . "&order_id=" . $orderId . "&old_price=" . $old_price);
         exit;
     } catch (Exception $e) {
         // Rollback the transaction in case of an exception

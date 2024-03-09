@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$page_title = "Cafe Page";
+$page_title = "Playstation Menu ";
 if (isset($_SESSION['username'])) {
     require_once("inc/header.php");
     require_once("inc/sidebar.php");
@@ -27,17 +27,6 @@ if (isset($_SESSION['username'])) {
         </div>
         <!-- Content Row -->
 
-        <!-- Begin Cafe Content -->
-
-        <!-- <div class="row d-sm-flex align-items-center justify-content-between mb-4">
-            <div class="col-md-4">
-                <a href="adminAddFoodProduct.php" class="btn-lg mb-2 text-center btn btn-primary">
-                    اضافة منتج
-                </a>
-            </div>
-
-            <div class="col-md-4"></div>
-        </div> -->
 
         <div class="row">
             <?php
