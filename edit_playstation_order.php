@@ -205,131 +205,166 @@ if (isset($_SESSION['username'])) {
                 </div>
             </div>
         </div>
-        <script>
-            // Example JavaScript code for handling form submission
-            document.getElementById('addclick').addEventListener('click', function(event) {
-                // Add your logic to handle form submission using AJAX or other methods
-                var orderNumber = "<?= $orderId ?>";
-                alert('جاري تعديل الطلب رقم ' + orderNumber);
-            });
-            document.getElementById('endcalculations').addEventListener('click', function(event) {
-                // Add your logic to handle form submission using AJAX or other methods
-                var orderNumber = "<?= $orderId ?>";
-                alert('جاري انهاء الطلب رقم ' + orderNumber);
-            });
 
-            // Example JavaScript code for handling "Add more products" button click (Related With Cafe)
-            document.getElementById('addMoreProductsBtn').addEventListener('click', function() {
-                // Add your logic to handle adding more products, e.g., show/hide additional form fields
-                addMoreProductFields();
-            });
-
-            /// Related With food car
-            document.getElementById('addMoreProductsFood').addEventListener('click', function() {
-                // Add your logic to handle adding more products, e.g., show/hide additional form fields
-                addMoreProductFoodFields();
-            });
-
-            function addMoreProductFields() {
-                // Create new label for the dropdown menu
-                var newProductLabel = document.createElement('label');
-                newProductLabel.innerHTML = 'اختر المنتج';
-                newProductLabel.setAttribute('for', 'additionalProduct[]');
-
-                // Create new dropdown menu
-                var newProductSelect = document.createElement('select');
-                newProductSelect.className = 'form-control';
-                newProductSelect.name = 'additionalProduct[]'; // Use an array to handle multiple selections
-
-                // TODO: Add options to the new dropdown menu (you can fetch these dynamically from your database)
-                fetch('pages/get_cafe_porducts.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Populate the dropdown menu with options
-                        data.forEach(option => {
-                            var optionElement = document.createElement('option');
-                            optionElement.value = option.id; // Set the value based on your product data
-                            optionElement.text = option.product_name; // Set the display text based on your product data
-                            newProductSelect.appendChild(optionElement);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching product options:', error));
-
-                // Create new label for the quantity input field
-                var newQuantityLabel = document.createElement('label');
-                newQuantityLabel.innerHTML = 'الكمية';
-                newQuantityLabel.setAttribute('for', 'additionalQuantity[]');
-
-                // Create new quantity input field
-                var newQuantityInput = document.createElement('input');
-                newQuantityInput.type = 'number';
-                newQuantityInput.className = 'form-control';
-                newQuantityInput.name = 'additionalQuantity[]'; // Use an array to handle multiple inputs
-                newQuantityInput.required = true;
-                newQuantityInput.value = 1;
-                newQuantityInput.min = 1;
-
-                // Append the new labels and fields to the container
-                document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
-            }
-
-
-            function addMoreProductFoodFields() {
-                // Create new label for the dropdown menu
-                var newProductLabel = document.createElement('label');
-                newProductLabel.innerHTML = 'اختر المنتج من قائمة الطعام';
-                newProductLabel.setAttribute('for', 'additionalfoodproducts[]');
-
-                // Create new dropdown menu
-                var newProductSelect = document.createElement('select');
-                newProductSelect.className = 'form-control';
-                newProductSelect.name = 'additionalfoodproducts[]'; // Use an array to handle multiple selections
-
-                // TODO: Add options to the new dropdown menu (you can fetch these dynamically from your database)
-                fetch('pages/get_food_car_products.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        // Populate the dropdown menu with options
-                        data.forEach(option => {
-                            var optionElement = document.createElement('option');
-                            optionElement.value = option.id; // Set the value based on your product data
-                            optionElement.text = option.food_name; // Set the display text based on your product data
-                            newProductSelect.appendChild(optionElement);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching product options:', error));
-
-                // Create new label for the quantity input field
-                var newQuantityLabel = document.createElement('label');
-                newQuantityLabel.innerHTML = 'الكمية';
-                newQuantityLabel.setAttribute('for', 'additionalFoodQuantity[]');
-
-                // Create new quantity input field
-                var newQuantityInput = document.createElement('input');
-                newQuantityInput.type = 'number';
-                newQuantityInput.className = 'form-control';
-                newQuantityInput.name = 'additionalFoodQuantity[]'; // Use an array to handle multiple inputs
-                newQuantityInput.required = true;
-                newQuantityInput.value = 1;
-                newQuantityInput.min = 1;
-
-                // Append the new labels and fields to the container
-                document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
-                document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
-            }
-        </script>
 
     </div>
     <!-- /.container-fluid -->
 
-<?php
+    <?php
     require_once("inc/footer.php");
     require_once("inc/scripts.php");
+
+    ?>
+
+    <script>
+        // Example JavaScript code for handling form submission
+        document.getElementById('addclick').addEventListener('click', function(event) {
+            // Add your logic to handle form submission using AJAX or other methods
+            var orderNumber = "<?= $orderId ?>";
+            alert('جاري تعديل الطلب رقم ' + orderNumber);
+        });
+
+        // Example JavaScript code for handling form submission
+        document.getElementById('addclick').addEventListener('click', function(event) {
+            // event.preventDefault();
+            // Add your logic to handle form submission using AJAX or other methods
+            alert('جاري اضافة طلب العميل متنساش تضحك في وشه بقا ');
+        });
+
+        // Example JavaScript code for handling "Add more products" button click
+        document.getElementById('addMoreProductsBtn').addEventListener('click', function() {
+            // Add your logic to handle adding more products, e.g., show/hide additional form fields
+            addMoreProductFields();
+        });
+
+        /// Related With food car
+        document.getElementById('addMoreProductsFood').addEventListener('click', function() {
+            // Add your logic to handle adding more products, e.g., show/hide additional form fields
+            addMoreProductFoodFields();
+        });
+        // Fetch products and populate the dropdown
+        fetch('pages/get_cafe_porducts.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                var productSelect = document.getElementById('productSelect');
+
+                // Clear existing options (if any)
+                productSelect.innerHTML = '';
+
+                // Add a default option
+                var defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.text = 'برجاء اختيار المنتج';
+                productSelect.appendChild(defaultOption);
+
+                // Add options based on the fetched data
+                data.forEach(product => {
+                    var optionElement = document.createElement('option');
+                    optionElement.value = product.id; // Adjust this based on your product data
+                    optionElement.text = product.product_name; // Adjust this based on your product data
+                    productSelect.appendChild(optionElement);
+                });
+            })
+            .catch(error => console.error('Error fetching product options:', error));
+
+        function addMoreProductFields() {
+            // Create new label for the dropdown menu
+            var newProductLabel = document.createElement('label');
+            newProductLabel.innerHTML = 'اختر المنتج';
+            newProductLabel.setAttribute('for', 'additionalProduct[]');
+
+            // Create new dropdown menu
+            var newProductSelect = document.createElement('select');
+            newProductSelect.className = 'form-control';
+            newProductSelect.name = 'additionalProduct[]'; // Use an array to handle multiple selections
+
+            // TODO: Add options to the new dropdown menu (you can fetch these dynamically from your database)
+            fetch('pages/get_cafe_porducts.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the dropdown menu with options
+                    data.forEach(option => {
+                        var optionElement = document.createElement('option');
+                        optionElement.value = option.id; // Set the value based on your product data
+                        optionElement.text = option.product_name; // Set the display text based on your product data
+                        newProductSelect.appendChild(optionElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching product options:', error));
+
+            // Create new label for the quantity input field
+            var newQuantityLabel = document.createElement('label');
+            newQuantityLabel.innerHTML = 'الكمية';
+            newQuantityLabel.setAttribute('for', 'additionalQuantity[]');
+
+            // Create new quantity input field
+            var newQuantityInput = document.createElement('input');
+            newQuantityInput.type = 'number';
+            newQuantityInput.className = 'form-control';
+            newQuantityInput.name = 'additionalQuantity[]'; // Use an array to handle multiple inputs
+            newQuantityInput.required = true;
+            newQuantityInput.value = 1;
+            newQuantityInput.min = 1;
+
+            // Append the new labels and fields to the container
+            document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
+        }
+
+        function addMoreProductFoodFields() {
+            // Create new label for the dropdown menu
+            var newProductLabel = document.createElement('label');
+            newProductLabel.innerHTML = 'اختر المنتج من قائمة الطعام';
+            newProductLabel.setAttribute('for', 'additionalfoodproducts[]');
+
+            // Create new dropdown menu
+            var newProductSelect = document.createElement('select');
+            newProductSelect.className = 'form-control';
+            newProductSelect.name = 'additionalfoodproducts[]'; // Use an array to handle multiple selections
+
+            // TODO: Add options to the new dropdown menu (you can fetch these dynamically from your database)
+            fetch('pages/get_food_car_products.php')
+                .then(response => response.json())
+                .then(data => {
+                    // Populate the dropdown menu with options
+                    data.forEach(option => {
+                        var optionElement = document.createElement('option');
+                        optionElement.value = option.id; // Set the value based on your product data
+                        optionElement.text = option.food_name; // Set the display text based on your product data
+                        newProductSelect.appendChild(optionElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching product options:', error));
+
+            // Create new label for the quantity input field
+            var newQuantityLabel = document.createElement('label');
+            newQuantityLabel.innerHTML = 'الكمية';
+            newQuantityLabel.setAttribute('for', 'additionalFoodQuantity[]');
+
+            // Create new quantity input field
+            var newQuantityInput = document.createElement('input');
+            newQuantityInput.type = 'number';
+            newQuantityInput.className = 'form-control';
+            newQuantityInput.name = 'additionalFoodQuantity[]'; // Use an array to handle multiple inputs
+            newQuantityInput.required = true;
+            newQuantityInput.value = 1;
+            newQuantityInput.min = 1;
+
+            // Append the new labels and fields to the container
+            document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
+            document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
+        }
+    </script>
+<?php
 } else {
     header("Location: index.php");
     exit();
