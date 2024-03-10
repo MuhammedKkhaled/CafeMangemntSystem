@@ -228,7 +228,12 @@ if (isset($_SESSION['username'])) {
         document.getElementById('addclick').addEventListener('click', function(event) {
             // event.preventDefault();
             // Add your logic to handle form submission using AJAX or other methods
-            alert('جاري اضافة طلب العميل متنساش تضحك في وشه بقا ');
+            var confirmation = confirm('هل أنت متأكد من رغبتك في إضافة طلب العميل؟');
+            if (!confirmation) {
+                // إذا قام المستخدم بالضغط على "إلغاء"، لا يتم تنفيذ العملية
+                alert('لقد تم إلغاء العملية.');
+                event.preventDefault(); // يمنع تنفيذ العملية الافتراضية المرتبطة بالنموذج
+            }
         });
 
         // Example JavaScript code for handling "Add more products" button click
@@ -311,11 +316,29 @@ if (isset($_SESSION['username'])) {
             newQuantityInput.value = 1;
             newQuantityInput.min = 1;
 
+
+            // Create delete button
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.innerHTML = 'Delete';
+            deleteButton.style.marginLeft = '10px'; // Adjust the margin as needed
+            deleteButton.addEventListener('click', function() {
+                // Logic to delete the current order
+                newProductLabel.remove();
+                newProductSelect.remove();
+                newQuantityLabel.remove();
+                newQuantityInput.remove();
+                deleteButton.remove();
+            });
+
             // Append the new labels and fields to the container
             document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
             document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
             document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
             document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
+            document.getElementById('additionalProductFieldsContainer').appendChild(deleteButton);
+
         }
 
         function addMoreProductFoodFields() {
@@ -357,11 +380,28 @@ if (isset($_SESSION['username'])) {
             newQuantityInput.value = 1;
             newQuantityInput.min = 1;
 
+
+            // Create delete button
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-danger';
+            deleteButton.innerHTML = 'Delete';
+            deleteButton.style.marginLeft = '10px'; // Adjust the margin as needed
+            deleteButton.addEventListener('click', function() {
+                // Logic to delete the current order
+                newProductLabel.remove();
+                newProductSelect.remove();
+                newQuantityLabel.remove();
+                newQuantityInput.remove();
+                deleteButton.remove();
+            });
+
             // Append the new labels and fields to the container
             document.getElementById('additionalProductFieldsContainer').appendChild(newProductLabel);
             document.getElementById('additionalProductFieldsContainer').appendChild(newProductSelect);
             document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityLabel);
             document.getElementById('additionalProductFieldsContainer').appendChild(newQuantityInput);
+            document.getElementById('additionalProductFieldsContainer').appendChild(deleteButton);
         }
     </script>
 <?php
